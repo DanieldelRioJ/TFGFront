@@ -8,7 +8,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Renderer2 } fr
 export class VideoDisplayerComponent implements OnInit, AfterViewInit {
 
   @ViewChild('videoDisplayer', { static: false }) videoDisplayer: ElementRef;
-  videoUrl: string = 'http://localhost:5000/videos/converted2.mp4';
+  videoUrl: string = 'http://192.168.8.102:5000/videos/5a0ffb3722c6e/virtual/5a10bdec749c2?start=11';
   mimeCodec = 'video/mp4; codecs="avc1.4d4020"';
   mediaSource = new MediaSource;
   sourceBuffer;
@@ -30,14 +30,10 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
   sourceOpen() {
         this.mediaSource.duration=130
         this.sourceBuffer = this.mediaSource.addSourceBuffer(this.mimeCodec);
-        //this.sourceBuffer.appendWindowEnd=130
+        this.sourceBuffer.appendWindowEnd=130
         this.fetchAB(this.videoUrl,  (buf)=> {
-            this.sourceBuffer.timestampOffset=60
+            this.sourceBuffer.timestampOffset=0
           this.sourceBuffer.appendBuffer(buf);
-          this.fetchAB(this.videoUrl,(buf)=>{
-              this.sourceBuffer.timestampOffset=0
-              this.sourceBuffer.appendBuffer(buf)
-          })
 
         });
   }
