@@ -1,0 +1,62 @@
+<!--<app-video-displayer></app-video-displayer>-->
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b class="">Filtro</b>
+      </mat-panel-title>
+      <mat-panel-description>
+        Filtre los vídeos por ciudad y/o fecha
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <form class="mb-3">
+      <div class="form-row">
+        <div class="col-md-4 mb-3">
+          <label for="city-input">Ciudad</label>
+          <input type="text" class="form-control" id="city-input" placeholder="First name" value="">
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="from-input">Desde</label>
+          <input type="date" class="form-control" id="from-input" value="">
+        </div>
+        <div class="col-md-4 mb-3">
+          <label for="until-input">Hasta</label>
+          <input type="date" class="form-control" id="until-input" value="">
+        </div>
+      </div>
+
+      <div>
+        <button class="btn btn-success mr-2" type="button" (click)="console.log('clicked')">Buscar</button>
+        <button class="btn btn-secondary" type="reset">Reset</button>
+      </div>
+    </form>
+
+  </mat-expansion-panel>
+</mat-accordion>
+<div class="pt-2">Ordenar por:
+  <select required (change)="sortVideoBy($event.target.value)">
+    <option value="city" selected>Ciudad</option>
+    <option value="upload_date">Fecha de subida</option>
+    <option value="recorded_date">Fecha de grabación</option>
+  </select>
+</div>
+<div class="py-2 ">Orden:
+  <select required [(ngModel)]="order" (change)="videos.reverse()">
+    <option [value]="0">Descendente</option>
+    <option [value]="1">Ascendente</option>
+  </select>
+</div>
+<div class="card-deck">
+  <div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb-5 clickable p-0 p-sm-3" *ngFor="let video of videos" routerLink="/videos/{{video.id}}">
+    <div class="card m-0">
+      <img src="{{environment.apiUrl}}/videos/{{video.id}}/background" class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text mb-0"><b>Título:</b> {{video.title}}</p>
+        <p class="card-text mb-0"><b>Ciudad:</b> {{video.city}}</p>
+        <p class="card-text mb-0"><b>Fecha de grabación:</b> {{video.recorded_date | date: 'dd/MM/yyyy hh:mm'}}</p>
+        <p class="card-text"><b>Fecha de subida:</b> {{video.upload_date | date: 'dd/MM/yyyy hh:mm'}}</p>
+      </div>
+    </div>
+  </div>
+</div>

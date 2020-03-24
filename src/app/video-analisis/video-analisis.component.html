@@ -1,0 +1,86 @@
+<div class="row">
+  <article class="col-12 col-lg-6 mb-2 position-relative">
+    <app-path *ngIf="video!=undefined" [video]="video" (drawn)="setPath($event)" [reset]="resetPath"></app-path>
+    <!--<canvas #canvas class="w-100"></canvas>
+    <img #background class="w-100 d-none" src="{{environment.apiUrl}}/videos/{{video?.id}}/background" alt="Imagen background sin objetos">-->
+    <app-video-displayer *ngIf="video!=undefined" [video]="video" [settings]="showGeneratedVideo"></app-video-displayer>
+    <video class="w-100" *ngIf="video!=undefined" src="{{environment.apiUrl}}/videos/{{video?.id}}/media" controls></video>
+  </article>
+  <article class="col-12 col-lg-6">
+    <div class="card p-3">
+      <form novalidate (ngSubmit)="generateVideo()" [formGroup]="filterForm">
+        <h5>Parámetros de generación</h5>
+        <hr>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <fa-icon class="mr-2" [icon]="clothIcon"></fa-icon>
+                <b>Apariencia</b>
+              </mat-panel-title>
+              <mat-panel-description>
+                Defina colores de la vestimenta
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <hr>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <fa-icon class="mr-2" [icon]="timeIcon"></fa-icon>
+                <b>Tiempo</b>
+              </mat-panel-title>
+              <mat-panel-description>
+                Defina rango de tiempo
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <hr>
+            <p>Desde:<input class="form-control" type="text" placeholder="00:00:00" pattern="^[0-9]{1,2}:[0-9]{2}:[0-9]{2}$"></p>
+            <p>Hasta:<input class="form-control" type="text" placeholder="00:00:00" pattern="^[0-9]{1,2}:[0-9]{2}:[0-9]{2}$"></p>
+          </mat-expansion-panel>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <fa-icon class="mr-2" [icon]="pathIcon"></fa-icon>
+                <b>Ruta</b>
+              </mat-panel-title>
+              <mat-panel-description>
+                Defina ruta, zona o dirección
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <hr>
+            <button type="button" *ngIf="pathFilter.path==undefined" [disabled]="area!=undefined || direction!=undefined" class="btn btn-outline-secondary btn-block">Definir ruta</button>
+            <button type="button" *ngIf="pathFilter.path!=undefined" class="btn btn-outline-danger btn-block" (click)="funcResetPath()">Eliminar ruta</button>
+
+            <button type="button" *ngIf="area==undefined" class="btn btn-outline-secondary btn-block" [disabled]="pathFilter.path!=undefined || direction!=undefined">Definir area</button>
+            <button type="button" *ngIf="area!=undefined" class="btn btn-outline-danger btn-block">Eliminar area</button>
+
+            <button type="button" *ngIf="direction==undefined" class="btn btn-outline-secondary btn-block" [disabled]="pathFilter.path!=undefined || area!=undefined">Definir dirección</button>
+            <button type="button" *ngIf="direction!=undefined" class="btn btn-outline-danger btn-block">Eliminar dirección</button>
+
+
+          </mat-expansion-panel>
+          <mat-expansion-panel formGroupName="velocity">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <fa-icon class=" mr-2" [icon]="speedIcon"></fa-icon>
+                <b>Velocidad</b>
+              </mat-panel-title>
+              <mat-panel-description>
+                Defina velocidad
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <hr>
+            <p><b>Velocidad:</b></p>
+            <p>Mínima:<input class="form-control" placeholder="0" type="number" min="0" formControlName="min"></p>
+            <p>Máxima:<input class="form-control" placeholder="0" type="number" min="0" formControlName="max"></p>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <button class="btn btn-success btn-block mt-2">
+          <fa-icon [icon]="generateIcon"></fa-icon>
+          Generar
+        </button>
+      </form>
+    </div>
+  </article>
+</div>
