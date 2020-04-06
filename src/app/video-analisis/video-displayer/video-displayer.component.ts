@@ -18,13 +18,19 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
   @Input() video:Video;
   @Input() settings:Subject<any>;
 
+  CHUNCK_TIME:number=10;
+
+  downloadChunks:Array<Boolean>; //each position tell us if a chunk is donwloaded.
+
   videoUrl: string;
   virtualVideo;
   filter:Filter;
   mimeCodec = 'video/mp4; codecs="avc1.4d4020"';
-  mediaSource = new MediaSource;
-  sourceBuffer;
+  mediaSource;
+  sourceBuffer:SourceBuffer;
   actualTime:number=0;
+
+
 
   constructor(private renderer: Renderer2,
         private videoService:VideoService) { }
@@ -35,8 +41,19 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
       this.settings.subscribe(filter=>{
+
           this.filter=filter
           this.videoService.generateVirtualVideo(this.video.id,filter).subscribe(json=>{
+              //Si ya hemos visualizado un resumen, limpiamos el buffer
+              if(this.sourceBuffer!=undefined) {
+                  debugger;
+                  if(this.mediaSource.readyState=="open"){
+                    this.sourceBuffer.abort()
+                }
+                  this.mediaSource.removeSourceBuffer(this.sourceBuffer)
+              }
+              this.mediaSource=new MediaSource
+              this.actualTime=0
               console.log(json);
               this.virtualVideo=json;
               this.videoUrl=`${this.environment.apiUrl}/videos/${this.video.id}/virtual/${json.id}`
@@ -57,23 +74,39 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
     }
   }
 
+  addChunck(buf, time){
+    this.sourceBuffer.timestampOffset=time;
+    this.sourceBuffer.appendBuffer(buf);
+    this.downloadChunks[Math.floor(this.actualTime/this.CHUNCK_TIME)]=true;
+    this.actualTime+=this.CHUNCK_TIME;
+  }
+
   getNextChunk(){
-      if(this.actualTime>this.virtualVideo.frame_list.length/this.video.fps) {
+      if(this.actualTime>this.mediaSource.duration) {
           this.sourceBuffer.onupdateend=(x)=>this.mediaSource.endOfStream(); //Por si está aún cargando
           if(!this.sourceBuffer.updating) this.mediaSource.endOfStream(); //Por si ya ha cargado
           return;
       }
       this.videoService.getVirtualVideoPiece(this.video.id, this.virtualVideo.id, this.actualTime).subscribe(buf=>{
-          this.sourceBuffer.timestampOffset=this.actualTime;
-        this.sourceBuffer.appendBuffer(buf);
-        this.actualTime+=5;
-        this.getNextChunk();
+          if (!this.sourceBuffer.updating) {
+              this.addChunck(buf, this.actualTime)
+              this.getNextChunk();
+
+        } else {
+            this.sourceBuffer.onupdateend = () => {
+                this.addChunck(buf,this.actualTime)
+                this.getNextChunk();
+            };
+        }
       });
 
   }
 
   sourceOpen() {
-    this.mediaSource.duration=this.virtualVideo.frame_list.length/this.video.fps-1;
+    this.mediaSource.duration=this.virtualVideo.frame_list.length/this.video.fps_adapted;
+    let chunkQuantity=Math.ceil(this.mediaSource.duration/this.CHUNCK_TIME);
+    this.downloadChunks=new Array(chunkQuantity);
+    for(var i=0;i<chunkQuantity;i++) this.downloadChunks[i]=false
     this.sourceBuffer = this.mediaSource.addSourceBuffer(this.mimeCodec);
 
   }

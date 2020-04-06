@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef, Renderer2, Output, EventEmitter } from '@angular/core';
-import { Video } from 'src/app/objects/video';
 import { environment } from 'src/environments/environment';
 import { Subject } from 'rxjs/internal/Subject';
+import { Video } from 'src/app/objects/video';
 
 @Component({
   selector: 'app-path',
@@ -11,8 +11,8 @@ import { Subject } from 'rxjs/internal/Subject';
 export class PathComponent implements OnInit, AfterViewInit {
 
   @Output() drawn: EventEmitter<{x:number,y:number}[]> = new EventEmitter();
-  @Input() video:Video;
   @Input() reset:Subject<any>;
+  @Input() video:Video;
   @ViewChild('canvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
   @ViewChild('background', { static: true }) background: ElementRef<HTMLImageElement>;
   canvasContext:CanvasRenderingContext2D;
@@ -71,7 +71,8 @@ export class PathComponent implements OnInit, AfterViewInit {
     }
 
   ngAfterViewInit(): void {
-      this.init();
+      this.background.nativeElement.onload=()=>this.init();
+
   }
 
   initCanvas():void{
@@ -91,13 +92,13 @@ export class PathComponent implements OnInit, AfterViewInit {
 
   mouseDownFunction(){
       if(this.coordinates.length==0){
-          this.mouseMoveListener=this.renderer.listen(this.canvas.nativeElement,"mousemove",$event=>{debugger;this.mouseMoveFunction($event.offsetX,$event.offsetY)});
-          this.pointerMoveListener=this.renderer.listen(this.canvas.nativeElement,"touchmove",$event=>{debugger;this.mouseMoveFunction($event.touches[0].screenX,$event.touches[0].screenY)});
+          this.mouseMoveListener=this.renderer.listen(this.canvas.nativeElement,"mousemove",$event=>{this.mouseMoveFunction($event.offsetX,$event.offsetY)});
+          this.pointerMoveListener=this.renderer.listen(this.canvas.nativeElement,"touchmove",$event=>{this.mouseMoveFunction($event.touches[0].screenX,$event.touches[0].screenY)});
       }
   }
 
   mouseMoveFunction(x,y){
-      if(this.mouseMoveCallsNumber%20==0){
+      if(this.mouseMoveCallsNumber%10==0){
           let realCoordinates=this.getRealCanvasCoordinate(x,y)
           this.canvasContext.beginPath();
           if(this.mouseMoveCallsNumber==0)

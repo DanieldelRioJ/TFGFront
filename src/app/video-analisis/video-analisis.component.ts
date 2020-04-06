@@ -10,6 +10,7 @@ import { TimeFilter } from '../objects/filter/time-filter';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { VelocityFilter } from '../objects/filter/velocity-filter';
 import { Filter } from '../objects/filter/filter';
+import { AreaFilter } from '../objects/filter/area-filter';
 
 const RangeValidator: ValidatorFn = (fg: FormGroup) => {
   const start = fg.get('min').value;
@@ -46,8 +47,8 @@ export class VideoAnalisisComponent implements OnInit{
     resetPath:Subject<any> = new Subject();
     showGeneratedVideo:Subject<any> = new Subject();
 
-    //canvas
-    canvasContext:CanvasRenderingContext2D;
+    resetArea:Subject<any> = new Subject();
+    stopArea:Subject<any> = new Subject();
 
     //objects
     video:Video;
@@ -56,10 +57,12 @@ export class VideoAnalisisComponent implements OnInit{
 
     //Filters
     pathFilter:PathFilter=new PathFilter();
+    areaFilter:AreaFilter=new AreaFilter();
     timeFilter:TimeFilter=new TimeFilter();
     velocityFilter:VelocityFilter=new VelocityFilter();
     area;
     direction;
+    action:string="original";
 
   constructor(private route:ActivatedRoute,
     private videoService:VideoService,
@@ -74,10 +77,13 @@ export class VideoAnalisisComponent implements OnInit{
       })
       this.filterForm = this.fb.group({
           velocity:this.fb.group({
-              min:['',Validators.min(0)],
-              max:['',Validators.min(1)]
+              min:[null,Validators.min(0)],
+              max:[null,Validators.min(0)],
+              time:[null,Validators.min(0)]
           },{validator:RangeValidator}),
           time:this.fb.group({
+              start:[null],
+              end:[null]
 
           })
   });
@@ -89,31 +95,42 @@ export class VideoAnalisisComponent implements OnInit{
   }
 
   setArea(area){
-      //TODO:
+      this.areaFilter.area=area
   }
 
   setDirection(direction){
       //TODO:
   }
 
+  acceptArea(){
+      this.stopArea.next();
+  }
+
   funcResetPath(){
+      this.action="original"
       this.pathFilter.path=undefined;
       this.resetPath.next();
   }
 
+  funcResetArea(){
+      this.action="original"
+      this.areaFilter.area=undefined;
+      this.resetArea.next();
+  }
+
+  createPath(){
+      this.action="path"
+  }
+
   generateVideo(){
-      //TODO:generate video
       if(!this.filterForm.valid) return;
+      this.action="view"
       let f:Filter=new Filter();
       f.velocity=this.filterForm.value.velocity;
+      f.location=this.pathFilter
       f.time=this.filterForm.value.time;
       console.log(this.filterForm.value)
       this.showGeneratedVideo.next(f);
   }
-
-  getVirtualVideoPiece(video_id,virtual_id, time_start){
-      
-  }
-
 
 }

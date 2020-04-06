@@ -5,5 +5,6 @@ export class Video {
     recorded_date:string;
     frame_quantity:number;
     fps:number;
+    fps_adapted:number;
     processed:boolean
 }

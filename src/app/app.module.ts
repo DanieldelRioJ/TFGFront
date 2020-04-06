@@ -14,6 +14,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {FormsModule} from '@angular/forms';
 import { VideoComponent } from './video/video.component';
 import { PathComponent } from './video-analisis/path/path.component';
+import {AreaComponent} from './video-analisis/area/area.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -24,7 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MainComponent,
     VideoAnalisisComponent,
     VideoComponent,
-    PathComponent
+    PathComponent,
+    AreaComponent
   ],
   imports: [
     BrowserModule,
