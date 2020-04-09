@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../services/video.service';
 import { Video } from '../objects/video';
-import { faFilter,faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faFilter,faDownload ,faUsers} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-video',
@@ -13,7 +13,10 @@ import { faFilter,faDownload } from '@fortawesome/free-solid-svg-icons';
 export class VideoComponent implements OnInit {
     filterIcon=faFilter;
     downloadIcon=faDownload;
+    objectsIcon=faUsers;
+    
     environment=environment;
+
     video:Video;
 
   constructor(private route:ActivatedRoute,

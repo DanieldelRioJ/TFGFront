@@ -54,7 +54,6 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
               }
               this.mediaSource=new MediaSource
               this.actualTime=0
-              console.log(json);
               this.virtualVideo=json;
               this.videoUrl=`${this.environment.apiUrl}/videos/${this.video.id}/virtual/${json.id}`
               this.init();
@@ -103,7 +102,7 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
   }
 
   sourceOpen() {
-    this.mediaSource.duration=this.virtualVideo.frame_list.length/this.video.fps_adapted;
+    this.mediaSource.duration=this.virtualVideo.frame_quantity/this.video.fps_adapted;
     let chunkQuantity=Math.ceil(this.mediaSource.duration/this.CHUNCK_TIME);
     this.downloadChunks=new Array(chunkQuantity);
     for(var i=0;i<chunkQuantity;i++) this.downloadChunks[i]=false

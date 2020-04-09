@@ -6,6 +6,10 @@
       <fa-icon [icon]="filterIcon"></fa-icon>
       Filtrar
     </button>
+    <button class="btn btn-primary mr-2" routerLink="/videos/{{video?.id}}/objects">
+      <fa-icon [icon]="objectsIcon"></fa-icon>
+      Ver objectos
+    </button>
     <a class="btn btn-secondary" href="{{environment.apiUrl}}/videos/{{video?.id}}/media" download>
       <fa-icon [icon]="downloadIcon"></fa-icon>
       Descargar

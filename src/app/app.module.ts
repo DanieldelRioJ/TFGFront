@@ -17,6 +17,7 @@ import { PathComponent } from './video-analisis/path/path.component';
 import {AreaComponent} from './video-analisis/area/area.component';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { VideoObjectsComponent } from './video/video-objects/video-objects.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     VideoAnalisisComponent,
     VideoComponent,
     PathComponent,
-    AreaComponent
+    AreaComponent,
+    VideoObjectsComponent
   ],
   imports: [
     BrowserModule,

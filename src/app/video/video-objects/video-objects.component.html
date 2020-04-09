@@ -1,0 +1,15 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+    <li class="breadcrumb-item"><a routerLink="/videos/{{video_id}}">Video</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Objetos</li>
+  </ol>
+</nav>
+<div class="container-fluid row">
+  <div *ngFor="let object of objects | keyvalue">
+    <div class="portrait">
+      <img src="{{environment.apiUrl}}/videos/{{video_id}}/objects/{{object.value.id}}/{{object.value.portrait}}" alt="">
+    </div>
+  </div>
+
+</div>

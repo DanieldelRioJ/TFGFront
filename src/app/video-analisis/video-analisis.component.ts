@@ -95,6 +95,7 @@ export class VideoAnalisisComponent implements OnInit{
   }
 
   setArea(area){
+      console.log(area)
       this.areaFilter.area=area
   }
 
@@ -128,6 +129,7 @@ export class VideoAnalisisComponent implements OnInit{
       let f:Filter=new Filter();
       f.velocity=this.filterForm.value.velocity;
       f.location=this.pathFilter
+      f.area=this.areaFilter
       f.time=this.filterForm.value.time;
       console.log(this.filterForm.value)
       this.showGeneratedVideo.next(f);

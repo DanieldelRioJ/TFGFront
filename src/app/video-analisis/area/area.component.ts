@@ -75,14 +75,14 @@ export class AreaComponent implements OnInit, AfterViewInit {
       let mouseX=parseInt(e.offsetX);
       let mouseY=parseInt(e.offsetY);
       let coordinate=this.getRealCanvasCoordinate(mouseX,mouseY)
-      this.coordinates.push({x:coordinate[0],y:coordinate[1]});
+      this.coordinates.push({x:Math.round(coordinate[0]),y:Math.round(coordinate[1])});
       this.drawPolygon();
   }
 
   drawPolygon(){
       this.canvasContext.clearRect(0,0,this.canvas.nativeElement.width,this.canvas.nativeElement.height);
       this.canvasContext.drawImage(this.background.nativeElement,0,0,this.canvas.nativeElement.width,this.canvas.nativeElement.height)
-      this.canvasContext.fillStyle="red"
+      this.canvasContext.fillStyle="#ff000050"
       this.canvasContext.fillRect(this.coordinates[0].x, this.coordinates[0].y,5,5);
       this.canvasContext.beginPath();
       this.canvasContext.moveTo(this.coordinates[0].x, this.coordinates[0].y);
@@ -90,6 +90,7 @@ export class AreaComponent implements OnInit, AfterViewInit {
         this.canvasContext.lineTo(this.coordinates[index].x, this.coordinates[index].y);
       }
       this.canvasContext.closePath();
+      this.canvasContext.fill();
       this.canvasContext.stroke();
     }
 
