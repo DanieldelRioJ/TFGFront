@@ -26,4 +26,8 @@ export class VideoService {
   getVirtualVideoPiece(video_id,virtual_id, time_start){
       return this.http.get(`${environment.apiUrl}/videos/${video_id}/virtual/${virtual_id}?start=${time_start}`,{responseType:"arraybuffer"})
   }
+
+  getMovieScriptPart(video_id,virtual_id,part){
+    return this.http.get(`${environment.apiUrl}/videos/${video_id}/virtual/${virtual_id}/${part}`);
+  }
 }

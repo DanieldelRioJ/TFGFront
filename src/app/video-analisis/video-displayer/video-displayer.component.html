@@ -1,2 +1,7 @@
-<video #videoDisplayer class="video-displayer" controls></video>
+<div #videoContainer style="position:relative" class="videoContainer">
+  <video (resized)="onVideoResize" style="display:inline-block" #videoDisplayer class="video-displayer" controls></video>
+  <a *ngFor="let boundingBox of virtualFrameAppearances?.appearance_list" [ngStyle]="{height:boundingBox.relative_height+'px',width:boundingBox.relative_width+'px',left:boundingBox.relative_col+'px',top:boundingBox.relative_row+'px'}"
+      class="bounding-box" routerLink="/videos/{{video.id}}/objects/{{boundingBox.object}}" target="_blank"></a>
+</div>
+<button (click)="onFullScreen($event)">FullScreen</button>
 <p>Object number: {{virtualVideo?.objects_quantity}}</p>

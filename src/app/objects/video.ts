@@ -6,5 +6,7 @@ export class Video {
     frame_quantity:number;
     fps:number;
     fps_adapted:number;
-    processed:boolean
+    processed:boolean;
+    height:number;
+    width:number;
 }

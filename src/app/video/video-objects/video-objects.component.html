@@ -7,7 +7,7 @@
 </nav>
 <div class="container-fluid row">
   <div *ngFor="let object of objects | keyvalue">
-    <div class="portrait">
+    <div class="portrait" routerLink="/videos/{{video_id}}/objects/{{object.value.id}}">
       <img src="{{environment.apiUrl}}/videos/{{video_id}}/objects/{{object.value.id}}/{{object.value.portrait}}" alt="">
     </div>
   </div>
