@@ -21,6 +21,7 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
 
   CHUNCK_TIME:number=10;
 
+  boundingBoxActivated:boolean=true;
   downloadChunks:Array<Boolean>; //each position tell us if a chunk is donwloaded.
 
   virtualVideo; //MovieScript of the virtual videos
@@ -61,6 +62,7 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
               this.mediaSource=new MediaSource
               this.actualTime=0
               this.virtualVideo=json;
+              this.movieScriptParts=new Array()
               this.init();
           })
       });

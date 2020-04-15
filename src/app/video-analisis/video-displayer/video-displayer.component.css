@@ -13,3 +13,8 @@
   z-index: 2147483647;
   cursor: pointer;
 }
+
+img.heatmap{
+  width: 100%;
+  max-width: 1000px;
+}

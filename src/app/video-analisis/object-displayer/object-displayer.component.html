@@ -1,9 +1,10 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-3">
+    <div class="col-12 col-lg-3">
+      <h4>Detalles</h4>
       <div class="card p-3">
         <p>Imagen:</p>
-        <img style="width:fit-content" *ngIf="obj" src="{{environment.apiUrl}}/videos/{{video_id}}/objects/{{obj.id}}/{{obj.portrait}}" alt="">
+        <img class="portrait" *ngIf="obj" src="{{environment.apiUrl}}/videos/{{video_id}}/objects/{{obj.id}}/{{obj.portrait}}" alt="">
         <p>Rango de aparición: {{obj?.first_appearance}} - {{obj?.last_appearance}}</p>
         <p>Velocidad media: {{obj?.average_speed | number:'1.0-2'}} pixels/frame</p>
         <p>Direccion: <span *ngIf="!obj?.angle">Errático</span>
@@ -12,8 +13,17 @@
       </div>
 
     </div>
-    <div class="col-9">
-      <img *ngIf="obj" style="width:100%; max-width:1000px" src="{{environment.apiUrl}}/videos/{{video_id}}/objects/{{obj.id}}/path" alt="">
+    <div class="col-12 col-lg-9 container-fluid">
+      <div class="col-12 ">
+        <h4>Ruta</h4>
+        <img *ngIf="obj" style="width:100%; max-width:1000px" src="{{environment.apiUrl}}/videos/{{video_id}}/objects/{{obj?.id}}/path" alt="">
+      </div>
+      <br>
+      <div class="col-12">
+        <h4>Video</h4>
+        <video *ngIf="obj" style="width:100%; max-width:1000px" src="{{environment.apiUrl}}/videos/{{video_id}}/objects/{{obj.id}}/video" controls></video>
+      </div>
     </div>
+
   </div>
 </div>
