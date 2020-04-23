@@ -4,6 +4,19 @@
     background-color: var(--primary-color-dark)
 }
 
+.image-flag{
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+
+/*I use absolute to try to reduce the size of the navbar, i couldnt style mat-form-field to reduce margin and padding*/
+mat-form-field{
+  position:absolute;
+  right: 10px;
+  top:0px;
+}
+
 footer{
     background-color: var(--primary-color);
     min-height: 100px;

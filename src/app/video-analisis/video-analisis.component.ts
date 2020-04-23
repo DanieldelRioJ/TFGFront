@@ -1,9 +1,9 @@
-import { Component, OnInit, Renderer2, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Renderer2, ElementRef, AfterViewInit, ViewChildren, QueryList, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Video } from '../objects/video';
 import { VideoService } from '../services/video.service';
 import { ActivatedRoute } from '@angular/router';
-import { faVideo,faTachometerAlt,faRoad,faClock, faTshirt} from '@fortawesome/free-solid-svg-icons';
+import { faVideo,faTachometerAlt,faRoad,faClock, faTshirt,faAngleUp} from '@fortawesome/free-solid-svg-icons';
 import { Subject } from 'rxjs/internal/Subject';
 import { PathFilter } from '../objects/filter/path-filter';
 import { TimeFilter } from '../objects/filter/time-filter';
@@ -27,7 +27,7 @@ const RangeValidator: ValidatorFn = (fg: FormGroup) => {
   templateUrl: './video-analisis.component.html',
   styleUrls: ['./video-analisis.component.css']
 })
-export class VideoAnalisisComponent implements OnInit{
+export class VideoAnalisisComponent implements OnInit,AfterViewInit{
 
     //Icons
     clothIcon=faTshirt;
@@ -35,13 +35,14 @@ export class VideoAnalisisComponent implements OnInit{
     generateIcon=faVideo;
     pathIcon=faRoad;
     speedIcon=faTachometerAlt;
+    angleIcon=faAngleUp;
 
     //environment
     environment=environment;
 
     //View
-    @ViewChild('canvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
-    @ViewChild('background', { static: true }) background: ElementRef<HTMLImageElement>;
+    @ViewChildren('dirArrowCheckbox') dirArrowCheckboxes: QueryList<ElementRef>;
+    @ViewChild('erraticCheckbox',{static:true}) erraticCheckbox:ElementRef;
 
     //CallChilds
     resetPath:Subject<any> = new Subject();
@@ -66,7 +67,29 @@ export class VideoAnalisisComponent implements OnInit{
 
   constructor(private route:ActivatedRoute,
     private videoService:VideoService,
-    private fb:FormBuilder) { }
+    private fb:FormBuilder,
+  private renderer:Renderer2) { }
+
+  ngAfterViewInit(): void {
+    this.renderer.listen(this.erraticCheckbox.nativeElement,"change",this.erraticChange.bind(this))
+    this.dirArrowCheckboxes.forEach(element=>this.renderer.listen(element.nativeElement,"change",this.dirCheckboxChange.bind(this)))
+  }
+
+    erraticChange(event){
+
+      if(this.erraticCheckbox.nativeElement.checked){
+      this.dirArrowCheckboxes.forEach((element)=>this.renderer.setProperty(element.nativeElement,"checked",false));
+      }
+      return true;
+    }
+
+    dirCheckboxChange(event){
+     if(event.target.checked){
+       this.renderer.setProperty(this.erraticCheckbox.nativeElement,"checked",false)
+     }
+     return true;
+
+    }
 
   ngOnInit() {
       this.route.paramMap.subscribe(params => {
@@ -84,7 +107,24 @@ export class VideoAnalisisComponent implements OnInit{
           time:this.fb.group({
               start:[null],
               end:[null]
-
+          }),
+          direction:this.fb.group({
+            up_left:false,
+            up:false,
+            up_right:false,
+            left:false,
+            right:false,
+            down_left:false,
+            down:false,
+            down_right:false,
+            erratic:false
+          }),
+          speed:this.fb.group({
+            very_slow:false,
+            slow:false,
+            normal:false,
+            fast:false,
+            very_fast:false
           })
   });
   }
@@ -127,10 +167,12 @@ export class VideoAnalisisComponent implements OnInit{
       if(!this.filterForm.valid) return;
       this.action="view"
       let f:Filter=new Filter();
+      f.direction=this.filterForm.value.direction;
       f.velocity=this.filterForm.value.velocity;
       f.location=this.pathFilter
       f.area=this.areaFilter
       f.time=this.filterForm.value.time;
+      f.speed=this.filterForm.value.speed;
       console.log(this.filterForm.value)
       this.showGeneratedVideo.next(f);
   }

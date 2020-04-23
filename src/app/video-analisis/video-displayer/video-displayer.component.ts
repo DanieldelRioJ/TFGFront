@@ -49,7 +49,7 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
     this.renderer.listen(this.videoDisplayer.nativeElement,'mozfullscreenchange',this.onFullScreen);
     this.renderer.listen(this.videoDisplayer.nativeElement,'fullscreenchange',this.onFullScreen);
       this.settings.subscribe(filter=>{
-
+          debugger;
           this.filter=filter
           this.videoService.generateVirtualVideo(this.video.id,filter).subscribe(json=>{
               //Si ya hemos visualizado un resumen, limpiamos el buffer
@@ -63,6 +63,7 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
               this.actualTime=0
               this.virtualVideo=json;
               this.movieScriptParts=new Array()
+              if (this.virtualVideo.objects_quantity==0) return;
               this.init();
           })
       });

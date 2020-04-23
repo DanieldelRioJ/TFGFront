@@ -1,0 +1,110 @@
+{
+  "main":{
+    "filter":{
+      "title":"Filter",
+      "description":"Filter videos by city and/or date",
+
+      "city-label":"City",
+      "city-input":"City",
+      "start-date-label":"From",
+      "end-date-label":"To",
+
+      "search-button":"Search",
+      "reset-button":"Reset"
+    },
+    "orderBy":{
+      "label":"Order by",
+      "city":"City",
+      "upload-date":"Upload date",
+      "recorded-date":"Recorded date"
+    },
+    "order":{
+      "label":"Order",
+      "downward":"Downward",
+      "upward":"Upward"
+    }
+  },
+
+  "video":{
+    "original-video":"Original video",
+    "information":"Information",
+    "empty-background":"Empty background",
+    "filter-button":"Filter",
+    "watch-objects-button":"See objects",
+    "download-button":"Download"
+  },
+  "filter":{
+    "generation-form":{
+      "title":"Generation parameters",
+      "generate-button":"Generate",
+      "appearance":{
+        "title":"Appearance",
+        "description":"Define clothes colors"
+      },
+      "time":{
+        "title":"Time",
+        "description":"Define time range",
+        "from":"From",
+        "to":"To"
+      },
+      "path":{
+        "title":"Path",
+        "description":"Define path, area and/or direction",
+        "create-path-button":"Define path",
+        "delete-path-button":"Delete path",
+        "create-area-button":"Define area",
+        "accept-area-button":"Accept area",
+        "delete-area-button":"Delete area",
+        "direction-tooltio":"Choose desired direction (if none, all are valid)",
+        "erratic-button":"Erratic",
+        "speed":{
+          "title":"Speed",
+          "very-slow":"Very slow",
+          "slow":"Slow",
+          "normal":"Normal",
+          "fast":"Fast",
+          "very-fast":"Very fast"
+        }
+      },
+      "speed":{
+        "title":"Speed",
+        "description":"Define speed",
+        "min":"Minimum(pixels/frame)",
+        "max":"Maximum(pixels/frame)",
+        "time":"Time(s)"
+      }
+    }
+  },
+
+
+  "objects":{
+    "video":{
+      "title":"Title",
+      "city":"City",
+      "recorded-date":"Recorded date",
+      "upload-date":"Upload date",
+      "fps":"FPS",
+      "description":"Description",
+      "n-frames":"Nº frames",
+      "duration":"Duration"
+    },
+    "object":{
+      "details":"Details",
+      "path":"Path",
+      "video":"Video",
+      "image":"Image",
+      "appearance-range":"Appearance range",
+      "average-speed":"Average speed",
+      "direction":"Direction"
+    }
+  },
+  "breadcrumbs":{
+    "home":"Home",
+    "video":"Video",
+    "objects":"Objects",
+    "filter":"Filter"
+  },
+  "sidebar":{
+    "home":"Home"
+  }
+}

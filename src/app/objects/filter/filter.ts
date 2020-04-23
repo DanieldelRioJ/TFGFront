@@ -4,5 +4,6 @@ export class Filter{
     location;
     area;
     direction;
+    speed;
     velocity;
 }

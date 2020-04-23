@@ -3,7 +3,7 @@ import { VideoObjectService } from 'src/app/services/video-object.service';
 import { ActivatedRoute } from '@angular/router';
 import { VideoObject } from 'src/app/objects/video-object';
 import { environment } from 'src/environments/environment';
-import { faGripLines} from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-object-displayer',
@@ -12,7 +12,7 @@ import { faGripLines} from '@fortawesome/free-solid-svg-icons';
 })
 export class ObjectDisplayerComponent implements OnInit {
   environment=environment;
-  arrowIcon=faGripLines;
+  arrowIcon=faArrowRight;
   video_id:string;
   object_id:string;
 

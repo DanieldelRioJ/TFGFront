@@ -1,1 +1,31 @@
+.table {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+.table-row {
+  display: table-row;
+}
+.table-cell {
+  display: table-cell;
+  width: 33%;
+}
 
+
+.checkbox-group input:checked + label,.table-cell input:checked + label{
+  background-color: red;
+  color:white;
+}
+
+.checkbox-group input, .cell input{
+  display: none;
+}
+
+.table-cell input+label{
+  width: 100%;
+  height: 100%;
+}
+
+.table-cell label{
+  margin: 5px;
+}

@@ -3,6 +3,10 @@ import { faAlignJustify } from '@fortawesome/free-solid-svg-icons';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { environment } from 'src/environments/environment';
 
+import { TranslateService } from '@ngx-translate/core';
+
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -13,10 +17,24 @@ export class AppComponent implements OnInit{
     @ViewChild('sidebar', { static: false }) sidebar: ElementRef;
     @ViewChild('sidebarCollapse', { static: false }) sidebarCollapse: ElementRef;
 
+    selectedLang="gl";
+
         iconCollapse=faAlignJustify;
         iconCollapse2=faChevronDown;
         environment=environment;
-      constructor(private renderer:Renderer2) { }
+      constructor(private renderer:Renderer2,
+      private translate: TranslateService) {
+      translate.setDefaultLang('es');
+
+      const browserLang = translate.getBrowserLang();
+      this.selectedLang=browserLang.match(/es|en|gl/) ? browserLang : 'en';
+      this.selectLang(this.selectedLang)
+  }
+
+  selectLang(lang){
+    this.selectedLang=lang;
+    this.translate.use(lang);
+  }
 
       ngOnInit() {
       }

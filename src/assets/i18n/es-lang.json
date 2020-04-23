@@ -1,0 +1,110 @@
+{
+  "main":{
+    "filter":{
+      "title":"Filtro",
+      "description":"Filte los vídeos por ciudad y/o fecha",
+
+      "city-label":"Ciudad",
+      "city-input":"Ciudad",
+      "start-date-label":"Desde",
+      "end-date-label":"Hasta",
+
+      "search-button":"Buscar",
+      "reset-button":"Borrar"
+    },
+    "orderBy":{
+      "label":"Ordenar por",
+      "city":"Ciudad",
+      "upload-date":"Fecha de subida",
+      "recorded-date":"Fecha de grabación"
+    },
+    "order":{
+      "label":"Orden",
+      "downward":"Descendente",
+      "upward":"Ascendente"
+    }
+  },
+
+  "video":{
+    "original-video":"Vídeo original",
+    "information":"Información",
+    "empty-background":"Fondo vacío",
+    "filter-button":"Filtrar",
+    "watch-objects-button":"Ver objetos",
+    "download-button":"Descargar"
+  },
+  "filter":{
+    "generation-form":{
+      "title":"Parámetros de generación",
+      "generate-button":"Generar",
+      "appearance":{
+        "title":"Apariencia",
+        "description":"Defina colores de la vestimenta"
+      },
+      "time":{
+        "title":"Tiempo",
+        "description":"Defina rango de tiempo",
+        "from":"Desde",
+        "to":"Hasta"
+      },
+      "path":{
+        "title":"Ruta",
+        "description":"Defina ruta, zona y/o dirección",
+        "create-path-button":"Definir ruta",
+        "delete-path-button":"Eliminar ruta",
+        "create-area-button":"Definir área",
+        "accept-area-button":"Aceptar área",
+        "delete-area-button":"Eliminar área",
+        "direction-tooltip":"Elige la dirección deseada (si no seleccionas ninguna, son todas válidas)",
+        "erratic-button":"Errático",
+        "speed":{
+          "title":"Velocidad",
+          "very-slow":"Muy lento",
+          "slow":"Lento",
+          "normal":"Normal",
+          "fast":"Rápido",
+          "very-fast":"Muy rápido"
+        }
+      },
+      "speed":{
+        "title":"Velocidad",
+        "description":"Defina velocidad",
+        "min":"Mínima(pixels/frame)",
+        "max":"Máxima(pixels/frame)",
+        "time":"Tiempo(s)"
+      }
+    }
+  },
+
+
+  "objects":{
+    "video":{
+      "title":"Título",
+      "city":"Ciudad",
+      "recorded-date":"Fecha de grabación",
+      "upload-date":"Fecha de subida",
+      "fps":"FPS",
+      "description":"Descripción",
+      "n-frames":"Nº frames",
+      "duration":"Duración"
+    },
+    "object":{
+      "details":"Detalles",
+      "path":"Ruta",
+      "video":"Video",
+      "image":"Imagen",
+      "appearance-range":"Rango de aparición",
+      "average-speed":"Velocidad media",
+      "direction":"Dirección"
+    }
+  },
+  "breadcrumbs":{
+    "home":"Inicio",
+    "video":"Video",
+    "objects":"Objetos",
+    "filter":"Filtro"
+  },
+  "sidebar":{
+    "home":"Inicio"
+  }
+}

@@ -1,8 +1,8 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-    <li class="breadcrumb-item"><a routerLink="/videos/{{video?.id}}">Video</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Filtro</li>
+    <li class="breadcrumb-item"><a routerLink="/">{{'breadcrumbs.home' | translate}}</a></li>
+    <li class="breadcrumb-item"><a routerLink="/videos/{{video?.id}}">{{'breadcrumbs.video' | translate}}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{'breadcrumbs.filter' | translate}}</li>
   </ol>
 </nav>
 <div class="row">
@@ -15,17 +15,17 @@
   <article class="col-12 col-lg-6">
     <div class="card p-3">
       <form novalidate (ngSubmit)="generateVideo()" [formGroup]="filterForm">
-        <h5>Parámetros de generación</h5>
+        <h5>{{'filter.generation-form.title' | translate}}</h5>
         <hr>
         <mat-accordion>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <fa-icon class="mr-2" [icon]="clothIcon"></fa-icon>
-                <b>Apariencia</b>
+                <b>{{'filter.generation-form.appearance.title'| translate}}</b>
               </mat-panel-title>
               <mat-panel-description>
-                Defina colores de la vestimenta
+                {{'filter.generation-form.appearance.description'| translate}}
               </mat-panel-description>
             </mat-expansion-panel-header>
             <hr>
@@ -34,37 +34,137 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <fa-icon class="mr-2" [icon]="timeIcon"></fa-icon>
-                <b>Tiempo</b>
+                <b>{{'filter.generation-form.time.title'| translate}}</b>
               </mat-panel-title>
               <mat-panel-description>
-                Defina rango de tiempo
+                {{'filter.generation-form.time.description'| translate}}
               </mat-panel-description>
             </mat-expansion-panel-header>
             <hr>
-            <p>Desde:<input class="form-control" type="time" placeholder="00:00:00" min="00:00:00" step="1" formControlName="start"></p>
-            <p>Hasta:<input class="form-control" type="time" min="00:00:00" step="1" formControlName="end"></p>
+            <p>{{'filter.generation-form.time.from'| translate}}:<input class="form-control" type="time" placeholder="00:00:00" min="00:00:00" step="1" formControlName="start"></p>
+            <p>{{'filter.generation-form.time.to'| translate}}:<input class="form-control" type="time" min="00:00:00" step="1" formControlName="end"></p>
           </mat-expansion-panel>
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <fa-icon class="mr-2" [icon]="pathIcon"></fa-icon>
-                <b>Ruta</b>
+                <b>{{'filter.generation-form.path.title'| translate}}</b>
               </mat-panel-title>
               <mat-panel-description>
-                Defina ruta, zona o dirección
+                {{'filter.generation-form.path.description'| translate}}
               </mat-panel-description>
             </mat-expansion-panel-header>
             <hr>
-            <button type="button" *ngIf="pathFilter.path==undefined" [disabled]="area!=undefined || direction!=undefined" (click)="createPath()" class=" btn btn-outline-secondary btn-block">Definir ruta</button>
-            <button type="button" *ngIf="pathFilter.path!=undefined" class="btn btn-outline-danger btn-block" (click)="funcResetPath()">Eliminar ruta</button>
+            <button type="button" *ngIf="pathFilter.path==undefined" [disabled]="area!=undefined || direction!=undefined" (click)="createPath()"
+              class=" btn btn-outline-secondary btn-block">{{'filter.generation-form.path.create-path-button'| translate}}</button>
+            <button type="button" *ngIf="pathFilter.path!=undefined" class="btn btn-outline-danger btn-block" (click)="funcResetPath()">{{'filter.generation-form.path.delete-path-button'| translate}}</button>
 
-            <button type="button" *ngIf="areaFilter.area==undefined" class="btn btn-outline-secondary btn-block" [hidden]="this.action=='area'" (click)="this.action='area'">Definir
-              area</button>
-            <button type="button" *ngIf="areaFilter.area==undefined" class="btn btn-outline-success btn-block" [hidden]="this.action!='area'" (click)="acceptArea()">Aceptar area</button>
-            <button type="button" *ngIf="areaFilter.area!=undefined" class="btn btn-outline-danger btn-block" (click)="funcResetArea()">Eliminar area</button>
+            <button type="button" *ngIf="areaFilter.area==undefined" class="btn btn-outline-secondary btn-block" [hidden]="this.action=='area'" (click)="this.action='area'">{{'filter.generation-form.path.create-area-button'| translate}}</button>
+            <button type="button" *ngIf="areaFilter.area==undefined" class="btn btn-outline-success btn-block" [hidden]="this.action!='area'" (click)="acceptArea()">{{'filter.generation-form.path.accept-area-button'| translate}}</button>
+            <button type="button" *ngIf="areaFilter.area!=undefined" class="btn btn-outline-danger btn-block" (click)="funcResetArea()">{{'filter.generation-form.path.delete-area-button'| translate}}</button>
 
+            <!--
             <button type="button" *ngIf="direction==undefined" class="btn btn-outline-secondary btn-block">Definir dirección</button>
             <button type="button" *ngIf="direction!=undefined" class="btn btn-outline-danger btn-block">Eliminar dirección</button>
+            -->
+            <hr>
+            <p>{{'filter.generation-form.path.direction-tooltip'| translate}}</p>
+            <div id="dir-button-container" class="table checkbox-group" formGroupName="direction">
+              <div class="table-row">
+                <div class="table-cell">
+                  <input #dirArrowCheckbox id="up-left" type="checkbox" value="1" formControlName="up_left">
+                  <label for="up-left" class="btn btn-outline-secondary">
+                    <fa-icon style="font-size:30px;" transform="rotate-315" [icon]="angleIcon"></fa-icon>
+                  </label>
+                </div>
+                <div class="table-cell">
+                  <input #dirArrowCheckbox id="up" type="checkbox" value="1" formControlName="up">
+                  <label for="up" class="btn btn-outline-secondary">
+                    <fa-icon style="font-size:30px;" transform="rotate-0" [icon]="angleIcon"></fa-icon>
+                  </label>
+                </div>
+                <div class="table-cell">
+                  <input #dirArrowCheckbox id="up-right" type="checkbox" value="1" formControlName="up_right">
+                  <label for="up-right" class="btn btn-outline-secondary">
+                    <fa-icon style="font-size:30px;" transform="rotate-45" [icon]="angleIcon"></fa-icon>
+                  </label>
+                </div>
+              </div>
+              <div class="table-row">
+                <div class="table-cell">
+                  <input #dirArrowCheckbox id="left" type="checkbox" value="1" formControlName="left">
+                  <label for="left" class="btn btn-outline-secondary">
+                    <fa-icon style="font-size:30px;" transform="rotate-270" [icon]="angleIcon"></fa-icon>
+                  </label>
+                </div>
+                <div class="table-cell">
+                  <input #erraticCheckbox id="erratic" type="checkbox" value="1" formControlName="erratic">
+                  <label for="erratic" class="btn btn-outline-secondary">
+                    {{'filter.generation-form.path.erratic-button'| translate}}
+                  </label>
+                </div>
+                <div class="table-cell">
+                  <input #dirArrowCheckbox id="right" type="checkbox" value="1" formControlName="right">
+                  <label for="right" class="btn btn-outline-secondary">
+                    <fa-icon style="font-size:30px;" transform="rotate-90" [icon]="angleIcon"></fa-icon>
+                  </label>
+                </div>
+              </div>
+              <div class="table-row">
+                <div class="table-cell">
+                  <input #dirArrowCheckbox id="down-left" type="checkbox" value="1" formControlName="down_left">
+                  <label for="down-left" class="btn btn-outline-secondary">
+                    <fa-icon style="font-size:30px;" transform="rotate-225" [icon]="angleIcon"></fa-icon>
+                  </label>
+                </div>
+                <div class="table-cell">
+                  <input #dirArrowCheckbox id="down" type="checkbox" value="1" formControlName="down">
+                  <label for="down" class="btn btn-outline-secondary">
+                    <fa-icon style="font-size:30px;" transform="rotate-180" [icon]="angleIcon"></fa-icon>
+                  </label>
+                </div>
+                <div class="table-cell">
+                  <input #dirArrowCheckbox id="down-right" type="checkbox" value="1" formControlName="down_right">
+                  <label for="down-right" class="btn btn-outline-secondary">
+                    <fa-icon style="font-size:30px;" transform="rotate-135" [icon]="angleIcon"></fa-icon>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <h3>{{'filter.generation-form.path.speed.title'| translate}}</h3>
+            <div class="checkbox-group" formGroupName="speed">
+              <div>
+                <input id="very-slow" type="checkbox" formControlName="very_slow">
+                <label for="very-slow" class="btn btn-outline-secondary">
+                  {{'filter.generation-form.path.speed.very-slow'| translate}}
+                </label>
+              </div>
+              <div>
+                <input id="slow" type="checkbox" formControlName="slow">
+                <label for="slow" class="btn btn-outline-secondary">
+                  {{'filter.generation-form.path.speed.slow'| translate}}
+                </label>
+              </div>
+              <div>
+                <input id="normal" type="checkbox" formControlName="normal">
+                <label for="normal" class="btn btn-outline-secondary">
+                  {{'filter.generation-form.path.speed.normal'| translate}}
+                </label>
+              </div>
+              <div>
+                <input id="fast" type="checkbox" formControlName="fast">
+                <label for="fast" class="btn btn-outline-secondary">
+                  {{'filter.generation-form.path.speed.fast'| translate}}
+                </label>
+              </div>
+              <div>
+                <input id="very-fast" type="checkbox" formControlName="very_fast">
+                <label for="very-fast" class="btn btn-outline-secondary">
+                  {{'filter.generation-form.path.speed.very-fast'| translate}}
+                </label>
+              </div>
+            </div>
 
 
           </mat-expansion-panel>
@@ -72,22 +172,21 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <fa-icon class=" mr-2" [icon]="speedIcon"></fa-icon>
-                <b>Velocidad</b>
+                <b>{{'filter.generation-form.speed.title'| translate}}</b>
               </mat-panel-title>
               <mat-panel-description>
-                Defina velocidad
+                {{'filter.generation-form.speed.description'| translate}}
               </mat-panel-description>
             </mat-expansion-panel-header>
             <hr>
-            <p><b>Velocidad:</b></p>
-            <p>Mínima(pixels/frame):<input class="form-control" placeholder="0" type="number" step="0.1" formControlName="min"></p>
-            <p>Máxima(pixels/frame):<input class="form-control" placeholder="0" type="number" step="0.1" formControlName="max"></p>
-            <p>Tiempo(pixels/frame):<input class="form-control" placeholder="0" type="number" step="1" formControlName="time"></p>
+            <p>{{'filter.generation-form.speed.min'| translate}}:<input class="form-control" placeholder="0" type="number" step="0.1" formControlName="min"></p>
+            <p>{{'filter.generation-form.speed.max'| translate}}:<input class="form-control" placeholder="0" type="number" step="0.1" formControlName="max"></p>
+            <p>{{'filter.generation-form.speed.time'| translate}}:<input class="form-control" placeholder="0" type="number" step="1" formControlName="time"></p>
           </mat-expansion-panel>
         </mat-accordion>
         <button type="submit" class="btn btn-success btn-block mt-2">
           <fa-icon [icon]="generateIcon"></fa-icon>
-          Generar
+          {{'filter.generation-form.generate-button'| translate}}
         </button>
       </form>
     </div>
