@@ -58,12 +58,13 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
                     this.sourceBuffer.abort()
                 }
                   this.mediaSource.removeSourceBuffer(this.sourceBuffer)
+
               }
-              this.mediaSource=new MediaSource
               this.actualTime=0
               this.virtualVideo=json;
               this.movieScriptParts=new Array()
               if (this.virtualVideo.objects_quantity==0) return;
+              this.mediaSource=new MediaSource
               this.init();
           })
       });

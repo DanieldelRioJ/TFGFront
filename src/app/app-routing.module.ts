@@ -5,12 +5,14 @@ import { VideoAnalisisComponent } from './video-analisis/video-analisis.componen
 import { VideoComponent } from './video/video.component';
 import { VideoObjectsComponent } from './video/video-objects/video-objects.component';
 import { ObjectDisplayerComponent } from './video-analisis/object-displayer/object-displayer.component';
+import { SettingsComponent } from './video/settings/settings.component';
 
 
 const routes: Routes = [
     { path: '', component: MainComponent ,pathMatch:'full'},
     { path: 'videos/:video_id', component: VideoComponent},
     { path: 'videos/:video_id/objects', component: VideoObjectsComponent},
+    { path: 'videos/:video_id/settings', component: SettingsComponent},
     { path: 'videos/:video_id/objects/:object_id', component: ObjectDisplayerComponent},
     { path: 'videos/:video_id/filter', component: VideoAnalisisComponent}
 

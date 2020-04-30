@@ -19,6 +19,14 @@ export class VideoService {
       return this.http.get<Video>(environment.apiUrl+"/videos/"+id);
   }
 
+  getFrameMap(id:string):Observable<any>{
+    return this.http.get(`${environment.apiUrl}/videos/${id}/frame_map`);
+  }
+
+  updateVideo(id:string,video):Observable<any>{
+      return this.http.put(`${environment.apiUrl}/videos/${id}`,video);
+  }
+
   generateVirtualVideo(id,filter):Observable<any>{
       return this.http.post(`${environment.apiUrl}/videos/${id}/virtual`,filter);
   }
@@ -29,5 +37,9 @@ export class VideoService {
 
   getMovieScriptPart(video_id,virtual_id,part){
     return this.http.get(`${environment.apiUrl}/videos/${video_id}/virtual/${virtual_id}/${part}`);
+  }
+
+  setPerspectivePoints(video_id,points){
+    return this.http.post(`${environment.apiUrl}/videos/${video_id}/perspective`,points);
   }
 }

@@ -22,10 +22,17 @@ import { ObjectDisplayerComponent } from './video-analisis/object-displayer/obje
 import {MatSelectModule} from '@angular/material/select'
 import {MatInputModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatButtonModule} from '@angular/material/button';
 
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { PerspectiveComponent } from './video/perspective/perspective.component';
+import { SettingsComponent } from './video/settings/settings.component';
+import { NotifierModule } from "angular-notifier";
+import {PopoverModule} from "ngx-smart-popover";
+import { BirdEyeViewComponent } from './video/bird-eye-view/bird-eye-view.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, '/assets/i18n/', '-lang.json');
@@ -41,7 +48,10 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     PathComponent,
     AreaComponent,
     VideoObjectsComponent,
-    ObjectDisplayerComponent
+    ObjectDisplayerComponent,
+    PerspectiveComponent,
+    SettingsComponent,
+    BirdEyeViewComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +65,10 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MatSelectModule,
     MatInputModule,
     MatIconModule,
+    MatTooltipModule,
+    MatButtonModule,
+    NotifierModule,
+    PopoverModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

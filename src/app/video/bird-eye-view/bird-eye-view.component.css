@@ -1,0 +1,14 @@
+.bird-eye-viewer{
+  background-color: black;
+  position:relative;
+}
+
+.object{
+  background-color: green;
+  border: green 1px solid;
+  position:absolute;
+  border-radius: 100%;
+  width: 8px;
+  height: 8px;
+  cursor: pointer;
+}

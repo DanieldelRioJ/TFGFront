@@ -14,4 +14,4 @@
   <label class="custom-control-label" for="boundingBoxCheckbox">Mostrar bounding boxes</label>
 </div>
 <p>Object number: {{virtualVideo?.objects_quantity}}</p>
-<img class="heatmap" src="{{environment.apiUrl}}/videos/{{video?.id}}/virtual/{{virtualVideo?.id}}/heatmap" alt="">
+<img class="heatmap" *ngIf="virtualVideo" src="{{environment.apiUrl}}/videos/{{video?.id}}/virtual/{{virtualVideo?.id}}/heatmap" alt="">

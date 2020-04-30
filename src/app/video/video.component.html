@@ -1,7 +1,7 @@
 <section class="row">
   <article class="col-12 col-lg-7">
     <h4>{{'video.original-video' | translate}}</h4>
-    <video src="{{environment.apiUrl}}/videos/{{video?.id}}/media" controls></video>
+    <video #originalVideo src="{{environment.apiUrl}}/videos/{{video?.id}}/media" controls></video>
     <button class="btn btn-primary mr-2" routerLink="/videos/{{video?.id}}/filter">
       <fa-icon [icon]="filterIcon"></fa-icon>
       {{'video.filter-button' | translate}}
@@ -10,12 +10,20 @@
       <fa-icon [icon]="objectsIcon"></fa-icon>
       {{'video.watch-objects-button' | translate}}
     </button>
-    <a class="btn btn-secondary" href="{{environment.apiUrl}}/videos/{{video?.id}}/media" download>
+    <a class="btn btn-secondary mr-2" href="{{environment.apiUrl}}/videos/{{video?.id}}/media" download>
       <fa-icon [icon]="downloadIcon"></fa-icon>
       {{'video.download-button' | translate}}
     </a>
+    <button class="btn btn-primary mr-2" routerLink="/videos/{{video?.id}}/settings">
+      <fa-icon [icon]="settingsIcon"></fa-icon>
+    </button>
   </article>
   <article class="info col-12 col-lg-5">
+    <h4>Bird Eye View</h4>
+    <app-bird-eye-view *ngIf="video?.perspective" [video]="video" [upperLeftLimit]=video.perspective.upper_left_limit [lowerRightLimit]="video.perspective.lower_right_limit" [appearances]="actualAppearances"></app-bird-eye-view>
+    <div *ngIf="!video?.perspective" class="alert alert-danger" role="alert">
+      Para activar vista de pájaro: <b>Ajustes>4 puntos de referencia</b>
+    </div>
     <h4>Información</h4>
     <div class="card p-2">
       <p><b>{{'objects.video.title' | translate}}:</b> {{video?.title}}</p>
@@ -38,4 +46,12 @@
   <img class="col-md-6 col-12 p-0" *ngIf="video" src="{{environment.apiUrl}}/videos/{{video?.id}}/background">
 </section>
 
+
 <div class="line"></div>
+
+<popover-content #myPopover title="Popover title" placement="left" [animation]="true" [closeOnClickOutside]="true">
+  <b>Very</b> <span style="color: #C21F39">Dynamic</span> <span style="color: #00b3ee">Reusable</span>
+  <b><i><span style="color: #ffc520">Popover With</span></i></b> <small>Html support</small>.
+</popover-content>
+
+<button [popover]="myPopover">element on which this popover is applied.</button>

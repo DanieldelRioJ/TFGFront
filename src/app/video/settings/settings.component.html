@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="row">
+    <article class="col-6">
+      <app-perspective *ngIf="video" (drawn)="newPerspective($event)" [reset]="resetPerspective" [video]="video"></app-perspective>
+    </article>
+    <article class="col-6 card p-3">
+      <h4>Settings</h4>
+      <div>
+        <button *ngIf="coordinates" class="btn btn-outline-danger btn-block" (click)="removePerspectivePoints()">Remove perspective poins</button>
+        <div *ngIf="!coordinates" class="alert alert-danger" role="alert" matTooltip="Para activar la vista de pájaro, se deben de seleccionar en la imagen 4 puntos de referencia en el suelo que en la realidad forman un rectángulo.">
+          <p class="m-0">Vista de pájaro desactivada</p>
+          <p class="m-0 text-muted">Selecciona 4 puntos</p>
+        </div>
+        <div *ngIf="video">
+          <div class="form-group">
+            <label for="title-input">Título</label>
+            <input type="text" class="form-control" id="title-input" [(ngModel)]="video.title">
+          </div>
+
+          <div class="form-group">
+            <label for="city-input">City</label>
+            <input type="text" class="form-control" id="city-input" [(ngModel)]="video.city">
+          </div>
+
+          <div class="form-group">
+            <label for="description-input">Description</label>
+            <textarea class="form-control" id="description-input" rows="3" [(ngModel)]="video.description"></textarea>
+          </div>
+        </div>
+        <button (click)="update()" class="btn btn-success btn-block">Aceptar</button>
+
+
+      </div>
+    </article>
+
+  </div>
+</div>
