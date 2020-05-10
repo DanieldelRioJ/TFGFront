@@ -1,15 +1,18 @@
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a routerLink="/">{{'breadcrumbs.home' | translate}}</a></li>
-    <li class="breadcrumb-item"><a routerLink="/videos/{{video_id}}">{{'breadcrumbs.video' | translate}}</a></li>
-    <li class="breadcrumb-item active" aria-current="page">{{'breadcrumbs.objects' | translate}}</li>
-  </ol>
-</nav>
-<div class="container-fluid row">
-  <div *ngFor="let object of objects | keyvalue">
-    <div class="portrait" routerLink="/videos/{{video_id}}/objects/{{object.value.id}}">
-      <img src="{{environment.apiUrl}}/videos/{{video_id}}/objects/{{object.value.id}}/{{object.value.portrait}}" alt="">
-    </div>
-  </div>
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <mat-card>
+      <button mat-button color="accent" routerLink="/">{{'breadcrumbs.home' | translate}}</button> /
+      <button mat-button color="accent" routerLink="/videos/{{video_id}}">{{'breadcrumbs.video' | translate}}</button> /
+      <button mat-button disabled>{{'breadcrumbs.objects' | translate}}</button>
+    </mat-card>
+  </nav>
+  <div class="container-fluid row mt-2">
 
+    <div *ngFor="let object of objects | keyvalue">
+      <div class="portrait" routerLink="/videos/{{video_id}}/objects/{{object.value.id}}">
+        <img src="{{environment.apiUrl}}/videos/{{video_id}}/objects/{{object.value.id}}/{{object.value.portrait}}" alt="">
+      </div>
+    </div>
+
+  </div>
 </div>

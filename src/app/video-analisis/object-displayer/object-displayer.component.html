@@ -1,16 +1,26 @@
-<div class="container-fluid">
-  <div class="row">
+<div class="container">
+  <mat-card>
+    <button mat-button color="accent" routerLink="/">{{'breadcrumbs.home' | translate}}</button> /
+    <button mat-button color="accent" routerLink="/videos/{{video_id}}">{{'breadcrumbs.video' | translate}}</button> /
+    <button mat-button color="accent" routerLink="/videos/{{video_id}}/objects">{{'breadcrumbs.objects' | translate}}</button> /
+    <button mat-button disabled>ID: {{obj?.id}}</button>
+  </mat-card>
+  <div class="row mt-2">
     <div class="col-12 col-lg-3">
       <h4>{{'objects.object.details' | translate}}</h4>
-      <div class="card p-3">
-        <p>{{'objects.object.image' | translate}}:</p>
+      <mat-card class=" p-3">
         <img class="portrait" *ngIf="obj" src="{{environment.apiUrl}}/videos/{{video_id}}/objects/{{obj.id}}/{{obj.portrait}}" alt="">
+        <hr>
         <p>{{'objects.object.appearance-range' | translate}}: {{obj?.first_appearance}} - {{obj?.last_appearance}}</p>
         <p>{{'objects.object.average-speed' | translate}}: {{obj?.average_speed | number:'1.0-2'}} pixels/frame</p>
         <p>{{'objects.object.direction' | translate}}: <span *ngIf="!obj?.angle">Errático</span>
           <fa-icon *ngIf="obj?.angle" style="font-size:30px;" transform="rotate-{{obj?.angle_degrees}}" [icon]="arrowIcon"></fa-icon>
         </p>
-      </div>
+        <div>Upper colors: <div *ngFor="let color of obj?.upper_colors" class="color-box" [ngStyle]="{backgroundColor:'rgb('+color+')'}"></div>
+        </div>
+        <div>Lower colors: <div *ngFor="let color of obj?.lower_colors" class="color-box" [ngStyle]="{backgroundColor:'rgb('+color+')'}"></div>
+        </div>
+      </mat-card>
 
     </div>
     <div class="col-12 col-lg-9 container-fluid">

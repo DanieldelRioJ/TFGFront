@@ -54,10 +54,10 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
           this.videoService.generateVirtualVideo(this.video.id,filter).subscribe(json=>{
               //Si ya hemos visualizado un resumen, limpiamos el buffer
               if(this.sourceBuffer!=undefined) {
+                while(this.sourceBuffer.updating){}
                   if(this.mediaSource.readyState=="open"){
                     this.sourceBuffer.abort()
                 }
-                  this.mediaSource.removeSourceBuffer(this.sourceBuffer)
 
               }
               this.actualTime=0

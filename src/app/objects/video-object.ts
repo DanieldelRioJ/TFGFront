@@ -7,4 +7,6 @@ export class VideoObject {
     angle;
     color;
     angle_degrees: number;
+    upper_colors:[];
+    lower_colors:[];
 }

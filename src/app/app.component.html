@@ -1,118 +1,43 @@
-<!--<nav class="custom-navbar dark navbar navbar-expand-lg navbar-dark">
-  <a class="navbar-brand" href="#">Virtual View&Search</a>
-</nav>-->
+<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar color="primary" class="example-toolbar">
+    <button mat-icon-button (click)="snav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1 class="example-app-name pointer" routerLink="/">Visualización Avanzada</h1>
 
-<div class="wrapper">
-  <!-- Sidebar  -->
-  <nav id="sidebar" #sidebar>
-    <div class="sidebar-header">
-      <h3>Search and Visualize Tool</h3>
-    </div>
+    <span style="flex: 1 1 auto;"></span>
 
-    <ul class="list-unstyled components">
-      <li>
-        <a routerLink="/">{{'sidebar.home' | translate}}</a>
-      </li>
-      <!--
-      <li>
-        <a href="#">About</a>
-      </li>
-      <li>
-        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-        <ul class="collapse list-unstyled" id="pageSubmenu">
-          <li>
-            <a href="#">Page 1</a>
-          </li>
-          <li>
-            <a href="#">Page 2</a>
-          </li>
-          <li>
-            <a href="#">Page 3</a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="#">Portfolio</a>
-      </li>
-      <li>
-        <a href="#">Contact</a>
-      </li>
-      -->
-    </ul>
-    <!--
-    <ul class="list-unstyled CTAs">
-      <li>
-        <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-      </li>
-      <li>
-        <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-      </li>
-      <li>
-        <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-      </li>
-      <li>
-        <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-      </li>
-    </ul>-->
-  </nav>
+    <mat-form-field style="width:70px">
+      <mat-select required [value]="selectedLang" (selectionChange)="selectLang($event.value)">
+        <mat-select-trigger>
+          <img class="image-flag" height="40px" src="/assets/lang/{{selectedLang}}.svg" alt="">
+        </mat-select-trigger>
+        <mat-option value="gl" selected>
+          <img class="image-flag" src="/assets/lang/gl.svg" alt="">
+        </mat-option>
+        <mat-option value="es">
+          <img class="image-flag" src="/assets/lang/es.svg" alt="">
+        </mat-option>
+        <mat-option value="en">
+          <img class="image-flag" src="/assets/lang/en.svg" alt="">
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-toolbar>
 
-  <!-- Page Content  -->
-  <div id="content">
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-
-        <button type="button" id="sidebarCollapse" style="color:black" #sidebarCollapse class="btn btn-info">
-          <fa-icon [icon]="iconCollapse" class="sidebar-header">
-          </fa-icon>
-        </button>
-        <!--
-        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <fa-icon [icon]="iconCollapse2" class="sidebar-header">
-          </fa-icon>
-        </button>
-        -->
-
-        <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <div mat-subheader class="p-1">Vídeos</div>
+      <div *ngFor="let video of videos" class="p-2 clickable miniature" routerLink="/videos/{{video.id}}" routerLinkActive="active">
         <div>
-          <!--
-          <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Page</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Page</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Page</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Page</a>
-            </li>
-          </ul>-->
-
-          <mat-form-field style="width:70px">
-            <mat-select required [value]="selectedLang" (selectionChange)="selectLang($event.value)">
-              <mat-select-trigger>
-                <img class="image-flag" height="40px" src="/assets/lang/{{selectedLang}}.svg" alt="">
-              </mat-select-trigger>
-              <mat-option value="gl" selected>
-                <img class="image-flag" src="/assets/lang/gl.svg" alt="">
-              </mat-option>
-              <mat-option value="es">
-                <img class="image-flag" src="/assets/lang/es.svg" alt="">
-              </mat-option>
-              <mat-option value="en">
-                <img class="image-flag" src="/assets/lang/en.svg" alt="">
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <img matListAvatar src="{{environment.apiUrl}}/videos/{{video?.id}}/background">
+          <p *ngIf="video.title" class="overlay-miniature mb-0 p-1">{{video.title}}</p>
         </div>
       </div>
-    </nav>
-    <section id="main-content" style="padding-bottom:82px">
+    </mat-sidenav>
+
+    <mat-sidenav-content class="p-2">
       <router-outlet></router-outlet>
-    </section>
-  </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>
-<notifier-container></notifier-container>

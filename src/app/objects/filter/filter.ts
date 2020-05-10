@@ -6,4 +6,5 @@ export class Filter{
     direction;
     speed;
     velocity;
+    outfit;
 }

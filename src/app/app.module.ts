@@ -20,10 +20,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { VideoObjectsComponent } from './video/video-objects/video-objects.component';
 import { ObjectDisplayerComponent } from './video-analisis/object-displayer/object-displayer.component';
 import {MatSelectModule} from '@angular/material/select'
-import {MatInputModule} from '@angular/material';
+import {MatInputModule, MatToolbarModule,MatSidenavModule,MatListModule, MatDatepickerModule, MatNativeDateModule, MatCardModule, MatRippleModule, MatTabsModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 
@@ -69,6 +70,15 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MatButtonModule,
     NotifierModule,
     PopoverModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRippleModule,
+    MatTabsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

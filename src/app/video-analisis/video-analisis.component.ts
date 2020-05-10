@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, ValidatorFn } from
 import { VelocityFilter } from '../objects/filter/velocity-filter';
 import { Filter } from '../objects/filter/filter';
 import { AreaFilter } from '../objects/filter/area-filter';
+import { OutfitFilter } from '../objects/filter/outfit';
 
 const RangeValidator: ValidatorFn = (fg: FormGroup) => {
   const start = fg.get('min').value;
@@ -125,6 +126,12 @@ export class VideoAnalisisComponent implements OnInit,AfterViewInit{
             normal:false,
             fast:false,
             very_fast:false
+          }),
+          outfit:this.fb.group({
+            upper_color:'ffffff',
+            lower_color:'ffffff',
+            upper_valid:false,
+            lower_valid:false
           })
   });
   }
@@ -173,6 +180,9 @@ export class VideoAnalisisComponent implements OnInit,AfterViewInit{
       f.area=this.areaFilter
       f.time=this.filterForm.value.time;
       f.speed=this.filterForm.value.speed;
+      f.outfit=new OutfitFilter()
+      f.outfit.upper_color=this.filterForm.value.outfit.upper_valid?this.filterForm.value.outfit.upper_color:null
+      f.outfit.lower_color=this.filterForm.value.outfit.lower_valid?this.filterForm.value.outfit.lower_color:null
       console.log(this.filterForm.value)
       this.showGeneratedVideo.next(f);
   }

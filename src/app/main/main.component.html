@@ -12,51 +12,78 @@
 
     <form class="mb-3">
       <div class="form-row">
+        <mat-form-field class="col-md-4 mb-3">
+          <mat-label>{{'main.filter.city-label' | translate}}</mat-label>
+          <input matInput type="text" placeholder="Santiago de Compostela">
+        </mat-form-field>
+        <!--
         <div class="col-md-4 mb-3">
           <label for="city-input">{{'main.filter.city-label' | translate}}</label>
           <input type="text" class="form-control" id="city-input" placeholder="{{'main.filter.city-input' | translate}}" value="">
-        </div>
-        <div class="col-md-4 mb-3">
-          <label for="from-input">{{'main.filter.start-date-label' | translate}}</label>
-          <input type="date" class="form-control" id="from-input" value="">
-        </div>
-        <div class="col-md-4 mb-3">
-          <label for="until-input">{{'main.filter.end-date-label' | translate}}</label>
-          <input type="date" class="form-control" id="until-input" value="">
-        </div>
+        </div>-->
+        <mat-form-field color="accent" class="col-md-4 mb-3">
+          <mat-label>{{'main.filter.start-date-label' | translate}}:</mat-label>
+          <input matInput [matDatepicker]="pickerFrom">
+          <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFrom></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field color="accent" class="col-md-4 mb-3">
+          <mat-label>{{'main.filter.end-date-label' | translate}}:</mat-label>
+          <input matInput [matDatepicker]="pickerTo">
+          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+          <mat-datepicker #pickerTo></mat-datepicker>
+        </mat-form-field>
       </div>
 
       <div>
-        <button class="btn btn-success mr-2" type="button" (click)="console.log('clicked')">{{'main.filter.search-button' | translate}}</button>
-        <button class="btn btn-secondary" type="reset">{{'main.filter.reset-button' | translate}}</button>
+        <button mat-raised-button class="mr-2" color="primary" type="button" (click)="console.log('clicked')">{{'main.filter.search-button' | translate}}</button>
+        <button mat-raised-button color="warn" type="reset" (click)="console.log('clicked')">{{'main.filter.reset-button' | translate}}</button>
       </div>
     </form>
 
   </mat-expansion-panel>
 </mat-accordion>
-<div class="pt-2">{{'main.orderBy.label' | translate}}:
-  <select required (change)="sortVideoBy($event.target.value)">
-    <option value="city" selected>{{'main.orderBy.city' | translate}}</option>
-    <option value="upload_date">{{'main.orderBy.upload-date' | translate}}</option>
-    <option value="recorded_date">{{'main.orderBy.recorded-date' | translate}}</option>
-  </select>
+<div class="ml-2" style="display:inline-block">{{'main.orderBy.label' | translate}}:
+  <mat-form-field>
+    <mat-select color="accent" [value]="'city'" required (selectionChange)="sortVideoBy($event.value)">
+      <mat-option value="city">
+        {{'main.orderBy.city' | translate}}
+      </mat-option>
+      <mat-option value="upload_date">
+        {{'main.orderBy.upload-date' | translate}}
+      </mat-option>
+      <mat-option value="recorded_date">
+        {{'main.orderBy.recorded-date' | translate}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
-<div class="py-2 ">{{'main.order.label' | translate}}:
-  <select required [(ngModel)]="order" (change)="videos.reverse()">
-    <option [value]="0">{{'main.order.downward' | translate}}</option>
-    <option [value]="1">{{'main.order.upward' | translate}}</option>
-  </select>
+
+<div class="ml-2" style="display:inline-block">{{'main.order.label' | translate}}:
+  <mat-form-field>
+    <mat-select color="accent" [value]="'0'" required (selectionChange)="videos.reverse()">
+      <mat-option value="0">
+        {{'main.order.downward' | translate}}
+      </mat-option>
+      <mat-option value="1">
+        {{'main.order.upward' | translate}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
-<div class="card-deck">
-  <div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb-5 clickable p-0 p-sm-3" *ngFor="let video of videos" routerLink="/videos/{{video.id}}">
-    <div class="card m-0">
-      <img src="{{environment.apiUrl}}/videos/{{video.id}}/background" class="card-img-top" alt="...">
-      <div class="card-body">
-        <p class="card-text mb-0"><b>{{'objects.video.title' | translate}}:</b> {{video.title}}</p>
-        <p class="card-text mb-0"><b>{{'objects.video.city' | translate}}:</b> {{video.city}}</p>
-        <p class="card-text mb-0"><b>{{'objects.video.recorded-date' | translate}}:</b> {{video.recorded_date | date: 'dd/MM/yyyy hh:mm'}}</p>
-        <p class="card-text"><b>{{'objects.video.upload-date' | translate}}:</b> {{video.upload_date | date: 'dd/MM/yyyy hh:mm'}}</p>
-      </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb-5 clickable p-0 p-sm-2" *ngFor="let video of videos">
+      <mat-card style="height:100%" routerLink="/videos/{{video.id}}">
+        <img mat-card-image src="{{environment.apiUrl}}/videos/{{video.id}}/background">
+        <mat-card-content>
+          <p class=" mb-0"><b>{{'objects.video.title' | translate}}:</b> {{video.title}}</p>
+          <p class=" mb-0"><b>{{'objects.video.city' | translate}}:</b> {{video.city}}</p>
+          <p class=" mb-0"><b>{{'objects.video.recorded-date' | translate}}:</b> {{video.recorded_date | date: 'dd/MM/yyyy hh:mm'}}</p>
+
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
+
 </div>

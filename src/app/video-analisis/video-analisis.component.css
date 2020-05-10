@@ -11,6 +11,10 @@
   width: 33%;
 }
 
+mat-expansion-panel{
+  background-color: #555;
+}
+
 
 .checkbox-group input:checked + label,.table-cell input:checked + label{
   background-color: red;

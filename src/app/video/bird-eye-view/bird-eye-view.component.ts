@@ -40,7 +40,7 @@ export class BirdEyeViewComponent implements OnInit,AfterContentInit {
   }
 
   ngAfterContentInit(){
-    this.actualWidth=300;
+    this.actualWidth=400;
     let ratio=this.originalHeight/this.originalWidth;
     this.actualHeight=this.actualWidth*ratio;
 

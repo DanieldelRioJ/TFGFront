@@ -6,3 +6,9 @@ video{
     font-size: 1.2rem;
     margin-bottom: 0px;
 }
+
+mat-card.info-card {
+
+background-color:grey;
+
+}
