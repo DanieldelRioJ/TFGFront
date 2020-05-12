@@ -1,0 +1,6 @@
+<!--<span style="background-color:blue">as</span><span style="background-color:purple">as</span><span style="background-color:pink">as</span><span style="background-color:red">as</span><span style="background-color:brown">as</span><span
+  style="background-color:orange">as</span><span style="background-color:yellow">as</span><span style="background-color:green">as</span><span style="background-color:white">as</span><span style="background-color:grey">as</span><span
+  style="background-color:black">as</span>-->
+<div #colorDiv class="color-div" *ngFor="let color of paletteColors;index as i" (click)="chooseColor(i,color)">
+  <span [ngStyle]="{backgroundColor:color}"></span>
+</div>

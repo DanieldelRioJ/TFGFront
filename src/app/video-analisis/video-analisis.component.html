@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <button mat-button color="accent" routerLink="/">{{'breadcrumbs.home' | translate}}</button> /
-    <button mat-button color="accent" routerLink="/videos/{{video_id}}">{{'breadcrumbs.video' | translate}}</button> /
+    <button mat-button color="accent" routerLink="/videos/{{video?.id}}">{{'breadcrumbs.video' | translate}}</button> /
     <button mat-button color="accent" disabled>{{'breadcrumbs.filter' | translate}}</button>
   </mat-card>
 
@@ -29,8 +29,11 @@
                 </mat-panel-description>
               </mat-expansion-panel-header>
               <hr>
-              <p>Choose upper color <input type="color" formControlName="upper_color"> Activado:<input type="checkbox" formControlName="upper_valid"></p>
-              <p>Choose lower color <input type="color" formControlName="lower_color"> Activado:<input type="checkbox" formControlName="lower_valid"></p>
+              <!--<p>Choose upper color <input type="color" formControlName="upper_color"> Activado:<input type="checkbox" formControlName="upper_valid"></p>-->
+              <p>Upper color: <app-palette (change)="setUpperColor($event)"></app-palette>
+              </p>
+              <p>Lower color: <app-palette (change)="setLowerColor($event)"></app-palette>
+              </p>
             </mat-expansion-panel>
             <mat-expansion-panel formGroupName="time">
               <mat-expansion-panel-header>
@@ -76,19 +79,19 @@
                 <div class="table-row">
                   <div class="table-cell">
                     <input #dirArrowCheckbox id="up-left" type="checkbox" value="1" formControlName="up_left">
-                    <label for="up-left" class="btn btn-outline-secondary">
+                    <label for="up-left" class="btn btn-secondary">
                       <fa-icon style="font-size:30px;" transform="rotate-315" [icon]="angleIcon"></fa-icon>
                     </label>
                   </div>
                   <div class="table-cell">
                     <input #dirArrowCheckbox id="up" type="checkbox" value="1" formControlName="up">
-                    <label for="up" class="btn btn-outline-secondary">
+                    <label for="up" class="btn btn-secondary">
                       <fa-icon style="font-size:30px;" transform="rotate-0" [icon]="angleIcon"></fa-icon>
                     </label>
                   </div>
                   <div class="table-cell">
                     <input #dirArrowCheckbox id="up-right" type="checkbox" value="1" formControlName="up_right">
-                    <label for="up-right" class="btn btn-outline-secondary">
+                    <label for="up-right" class="btn btn-secondary">
                       <fa-icon style="font-size:30px;" transform="rotate-45" [icon]="angleIcon"></fa-icon>
                     </label>
                   </div>
@@ -96,19 +99,19 @@
                 <div class="table-row">
                   <div class="table-cell">
                     <input #dirArrowCheckbox id="left" type="checkbox" value="1" formControlName="left">
-                    <label for="left" class="btn btn-outline-secondary">
+                    <label for="left" class="btn btn-secondary">
                       <fa-icon style="font-size:30px;" transform="rotate-270" [icon]="angleIcon"></fa-icon>
                     </label>
                   </div>
                   <div class="table-cell">
                     <input #erraticCheckbox id="erratic" type="checkbox" value="1" formControlName="erratic">
-                    <label for="erratic" class="btn btn-outline-secondary">
+                    <label for="erratic" class="btn btn-secondary">
                       {{'filter.generation-form.path.erratic-button'| translate}}
                     </label>
                   </div>
                   <div class="table-cell">
                     <input #dirArrowCheckbox id="right" type="checkbox" value="1" formControlName="right">
-                    <label for="right" class="btn btn-outline-secondary">
+                    <label for="right" class="btn btn-secondary">
                       <fa-icon style="font-size:30px;" transform="rotate-90" [icon]="angleIcon"></fa-icon>
                     </label>
                   </div>
@@ -116,19 +119,19 @@
                 <div class="table-row">
                   <div class="table-cell">
                     <input #dirArrowCheckbox id="down-left" type="checkbox" value="1" formControlName="down_left">
-                    <label for="down-left" class="btn btn-outline-secondary">
+                    <label for="down-left" class="btn btn-secondary">
                       <fa-icon style="font-size:30px;" transform="rotate-225" [icon]="angleIcon"></fa-icon>
                     </label>
                   </div>
                   <div class="table-cell">
                     <input #dirArrowCheckbox id="down" type="checkbox" value="1" formControlName="down">
-                    <label for="down" class="btn btn-outline-secondary">
+                    <label for="down" class="btn btn-secondary">
                       <fa-icon style="font-size:30px;" transform="rotate-180" [icon]="angleIcon"></fa-icon>
                     </label>
                   </div>
                   <div class="table-cell">
                     <input #dirArrowCheckbox id="down-right" type="checkbox" value="1" formControlName="down_right">
-                    <label for="down-right" class="btn btn-outline-secondary">
+                    <label for="down-right" class="btn btn-secondary">
                       <fa-icon style="font-size:30px;" transform="rotate-135" [icon]="angleIcon"></fa-icon>
                     </label>
                   </div>
@@ -139,31 +142,31 @@
               <div class="checkbox-group" formGroupName="speed">
                 <div>
                   <input id="very-slow" type="checkbox" formControlName="very_slow">
-                  <label for="very-slow" class="btn btn-outline-secondary">
+                  <label for="very-slow" class="btn btn-secondary">
                     {{'filter.generation-form.path.speed.very-slow'| translate}}
                   </label>
                 </div>
                 <div>
                   <input id="slow" type="checkbox" formControlName="slow">
-                  <label for="slow" class="btn btn-outline-secondary">
+                  <label for="slow" class="btn btn-secondary">
                     {{'filter.generation-form.path.speed.slow'| translate}}
                   </label>
                 </div>
                 <div>
                   <input id="normal" type="checkbox" formControlName="normal">
-                  <label for="normal" class="btn btn-outline-secondary">
+                  <label for="normal" class="btn btn-secondary">
                     {{'filter.generation-form.path.speed.normal'| translate}}
                   </label>
                 </div>
                 <div>
                   <input id="fast" type="checkbox" formControlName="fast">
-                  <label for="fast" class="btn btn-outline-secondary">
+                  <label for="fast" class="btn btn-secondary">
                     {{'filter.generation-form.path.speed.fast'| translate}}
                   </label>
                 </div>
                 <div>
                   <input id="very-fast" type="checkbox" formControlName="very_fast">
-                  <label for="very-fast" class="btn btn-outline-secondary">
+                  <label for="very-fast" class="btn btn-secondary">
                     {{'filter.generation-form.path.speed.very-fast'| translate}}
                   </label>
                 </div>

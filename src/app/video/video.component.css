@@ -2,6 +2,69 @@ video{
     width: 100%;
 }
 
+.video-viewer{
+  position:relative;
+    overflow: hidden;
+}
+
+.video-viewer video{
+  display:block;
+
+}
+
+.video-viewer:hover .controls{
+  transform: translateY(0%);
+}
+
+.video-viewer .controls{
+  position: absolute;
+  width: 100%;
+  padding:5px;
+  background-image: linear-gradient(to bottom, rgba(0,0,0,0),black);
+  left: 0px;
+  bottom: 0px;
+  z-index: 500;
+  transform: translateY(100%);
+  transition: transform 0.2s;
+
+}
+
+.video-viewer .control-container{
+  display: flex;
+  align-items: center;
+}
+
+.video-viewer .control-container button.play-button{
+  color:white;
+}
+
+.video-viewer .seek-container{
+  height: 20px;
+  width: 100%;
+  margin:5px;
+  background: rgba(255,255,255,0.3);
+  cursor:pointer;
+}
+
+.video-viewer .seek-container .seek-line{
+  background-color: white;
+  height: 100%;
+}
+
+canvas.canvas{
+  position:absolute;
+  top:0px;
+  left:0px;
+  z-index:1;
+}
+
+.bounding-box{
+  position:absolute;
+  border: 2px solid green;
+  z-index: 2;
+  cursor: pointer;
+}
+
 .info p{
     font-size: 1.2rem;
     margin-bottom: 0px;

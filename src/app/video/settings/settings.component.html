@@ -1,8 +1,8 @@
-<div class="container-fluid">
+<div class="container">
   <nav aria-label="breadcrumb">
     <mat-card>
       <button mat-button color="accent" routerLink="/">{{'breadcrumbs.home' | translate}}</button> /
-      <button mat-button color="accent" routerLink="/videos/{{video_id}}">{{'breadcrumbs.video' | translate}}</button> /
+      <button mat-button color="accent" routerLink="/videos/{{video?.id}}">{{'breadcrumbs.video' | translate}}</button> /
       <button mat-button disabled>{{'breadcrumbs.settings' | translate}}</button>
     </mat-card>
   </nav>
@@ -15,10 +15,9 @@
         <h4>{{'breadcrumbs.settings' | translate}}</h4>
         <mat-card-content>
           <div *ngIf="coordinates">
-            <button class="btn btn-outline-danger btn-block" (click)="removePerspectivePoints()">
+            <button mat-raised-button color="warn" class="btn-block" (click)="removePerspectivePoints()">
               Remove perspective poins
             </button>
-            <input type="number" step="0.1">
           </div>
           <div *ngIf="!coordinates" class="alert alert-danger" role="alert" matTooltip="Para activar la vista de pájaro, se deben de seleccionar en la imagen 4 puntos de referencia en el suelo que en la realidad forman un rectángulo.">
             <p class="m-0">Vista de pájaro desactivada</p>

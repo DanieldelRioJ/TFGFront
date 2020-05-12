@@ -25,7 +25,7 @@ export class SettingsComponent implements OnInit {
       let video_id = params.get("video_id");
       this.videoService.getVideo(video_id).subscribe(video=>{
           this.video=video;
-          //TODO: this.coordinates=video.coordinates
+          this.coordinates=this.video.perspective!=undefined?this.video.perspective.original_points:undefined;
       })
     })
   }
@@ -36,7 +36,6 @@ export class SettingsComponent implements OnInit {
   }
 
   newPerspective(coordinates){
-    console.log(coordinates)
     this.coordinates=coordinates;
   }
 

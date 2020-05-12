@@ -2,7 +2,32 @@
   <section class="row">
     <article class="col-12 col-lg-7">
       <h4>{{'video.original-video' | translate}}</h4>
-      <video #originalVideo src="{{environment.apiUrl}}/videos/{{video?.id}}/media" controls></video>
+      <div class="video-viewer">
+        <video #originalVideo src="{{environment.apiUrl}}/videos/{{video?.id}}/media" muted></video>
+        <div class="controls">
+          <div class="control-container">
+            <button mat-stroked-button color="primary" class="play-button" (click)="togglePlay()">
+              <fa-icon *ngIf="!playingVideo" class="mr-2" [icon]="playIcon"></fa-icon>
+              <fa-icon *ngIf="playingVideo" class="mr-2" [icon]="pauseIcon"></fa-icon>
+            </button>
+            <div class="seek-container" #seek (click)="updateDisplayer($event)">
+              <div class="seek-line" [ngStyle]="{width: actualFrame*100/video?.frame_quantity_adapted+'%'}"></div>
+            </div>
+            <p class="m-0">{{actualFrame*1000/video?.fps_adapted | date:'mm:ss':'UTC' }}/{{video?.frame_quantity_adapted*1000/video?.fps_adapted | date:'mm:ss':'UTC'}}</p>
+          </div>
+        </div>
+        <canvas #canvas class="canvas w-100 h-100" [hidden]="!boundingBoxesActivated"></canvas>
+        <div *ngIf="boundingBoxesActivated" class="w-100 h-100">
+          <a *ngFor="let boundingBox of actualAppearances" [hidden]="false"
+            [ngStyle]="{borderColor:boundingBox.collision?'red':'green',height:boundingBox.relative_height+'px',width:boundingBox.relative_width+'px',left:boundingBox.relative_col+'px',top:boundingBox.relative_row+'px'}" class="bounding-box"
+            routerLink="/videos/{{video.id}}/objects/{{boundingBox.object}}" target="_blank"></a>
+        </div>
+
+      </div>
+      <div>
+        <mat-checkbox [(ngModel)]="boundingBoxesActivated">Desactivate bounding boxes</mat-checkbox>
+      </div>
+
       <button mat-raised-button color="primary" class="mr-2" routerLink="/videos/{{video?.id}}/filter">
         <fa-icon [icon]="filterIcon"></fa-icon>
         {{'video.filter-button' | translate}}
@@ -21,7 +46,25 @@
     </article>
     <article class="info col-12 col-lg-5">
       <h4>Top View</h4>
-      <app-bird-eye-view *ngIf="video?.perspective" [video]="video" [upperLeftLimit]=video.perspective.upper_left_limit [lowerRightLimit]="video.perspective.lower_right_limit" [appearances]="actualAppearances"></app-bird-eye-view>
+      <mat-form-field color="accent">
+        <mat-label>Distancia:</mat-label>
+        <mat-select>
+          <mat-option [value]="1">
+            1m
+          </mat-option>
+          <mat-option [value]="2">
+            2m
+          </mat-option>
+          <mat-option [value]="5">
+            5m
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <ng-container *ngIf="video?.perspective">
+        <app-bird-eye-view [video]="video" [upperLeftLimit]=video.perspective.upper_left_limit [lowerRightLimit]="video.perspective.lower_right_limit" [appearances]="actualAppearances"></app-bird-eye-view>
+
+
+      </ng-container>
       <div *ngIf="!video?.perspective" class="alert alert-danger" role="alert">
         Para activar vista de pájaro: <b>Ajustes>4 puntos de referencia</b>
       </div>

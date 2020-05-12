@@ -1,14 +1,19 @@
 .bird-eye-viewer{
   background-color: black;
   position:relative;
+  overflow: hidden;
 }
 
 .object{
-  background-color: green;
-  border: green 1px solid;
   position:absolute;
   border-radius: 100%;
   width: 8px;
   height: 8px;
   cursor: pointer;
+  z-index: 2;
+}
+
+canvas.canvas{
+  position:absolute;
+  z-index: 1;
 }

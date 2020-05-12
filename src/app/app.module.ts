@@ -34,6 +34,7 @@ import { SettingsComponent } from './video/settings/settings.component';
 import { NotifierModule } from "angular-notifier";
 import {PopoverModule} from "ngx-smart-popover";
 import { BirdEyeViewComponent } from './video/bird-eye-view/bird-eye-view.component';
+import { PaletteComponent } from './video-analisis/palette/palette.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, '/assets/i18n/', '-lang.json');
@@ -52,7 +53,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ObjectDisplayerComponent,
     PerspectiveComponent,
     SettingsComponent,
-    BirdEyeViewComponent
+    BirdEyeViewComponent,
+    PaletteComponent
   ],
   imports: [
     BrowserModule,

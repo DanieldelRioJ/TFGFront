@@ -31,9 +31,13 @@ export class PerspectiveComponent implements OnInit {
   constructor(private renderer:Renderer2) { }
 
   ngOnInit() {
-      this.init()
+      if(this.video.perspective!=undefined){
+        this.coordinates=this.video.perspective.original_points;
+        this.convertCoordinatesFormat(this.coordinates);
+        console.log(this.coordinates)
+      }
       if(this.reset!=undefined) {
-        this.reset.subscribe(_=>{this.init()})
+        this.reset.subscribe(_=>{this.coordinates=undefined;this.init()})
       }
   }
 
@@ -42,9 +46,8 @@ export class PerspectiveComponent implements OnInit {
         if(this.canvasContext!=undefined){ //reset
             this.canvasContext.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
             this.mouseClickListener()
-            this.coordinates=[]
         }
-        this.isDone=false;
+
 
 
       this.canvasContext=this.canvas.nativeElement.getContext("2d");
@@ -52,10 +55,13 @@ export class PerspectiveComponent implements OnInit {
       this.initCanvas();
       if(this.coordinates==undefined){
         this.coordinates=[]
+        this.isDone=false;
       }
       else{
-        this.drawPolygon();
+
+        this.isDone=true;
       }
+      this.drawPolygon();
 
 
     }
@@ -119,6 +125,12 @@ export class PerspectiveComponent implements OnInit {
       x=this.canvas.nativeElement.width*x/this.canvas.nativeElement.clientWidth;
       y=this.canvas.nativeElement.height*y/this.canvas.nativeElement.clientHeight;
       return [x,y]
+  }
+
+  convertCoordinatesFormat(coordinates){
+    coordinates.forEach(function(coordinate, index) {
+        this[index] ={x:coordinate[0],y:coordinate[1]};
+      }, coordinates);
   }
 
 }

@@ -1,0 +1,20 @@
+.color-div{
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border: black solid 3px;
+  margin: 1px;
+  cursor: pointer;
+}
+
+.color-div.active{
+  border: white solid 3px;
+  width: 25px;
+  height: 25px;
+}
+
+.color-div span{
+  width: 100%;
+  height: 100%;
+  display: block;
+}

@@ -13,8 +13,9 @@
         <hr>
         <p>{{'objects.object.appearance-range' | translate}}: {{obj?.first_appearance}} - {{obj?.last_appearance}}</p>
         <p>{{'objects.object.average-speed' | translate}}: {{obj?.average_speed | number:'1.0-2'}} pixels/frame</p>
-        <p>{{'objects.object.direction' | translate}}: <span *ngIf="!obj?.angle">Errático</span>
-          <fa-icon *ngIf="obj?.angle" style="font-size:30px;" transform="rotate-{{obj?.angle_degrees}}" [icon]="arrowIcon"></fa-icon>
+        <p>{{'objects.object.direction' | translate}}:
+          <span *ngIf="!obj?.angle">Errático</span>
+          <fa-icon *ngIf="obj?.angle" style="font-size:20px;" transform="rotate-{{obj?.angle_degrees}}" [icon]="arrowIcon"></fa-icon>
         </p>
         <div>Upper colors: <div *ngFor="let color of obj?.upper_colors" class="color-box" [ngStyle]="{backgroundColor:'rgb('+color+')'}"></div>
         </div>

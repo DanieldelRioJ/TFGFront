@@ -1,11 +1,14 @@
-<div class="ml-5" #birdEyeViewDiv class="bird-eye-viewer" style="background:black" [style.height.px]="actualHeight" [style.width.px]="actualWidth">
-  <div *ngFor="let appearance of appearances" [popover]="myPopover" (mouseenter)="setObjectHover(appearance)" [ngStyle]="{top:(appearance.real_coordinates[1]-offsetY)*scale+'px',left:(appearance.real_coordinates[0]-offsetX)*scale+'px'}"
-    class="object">
+<div class="ml-5 bird-eye-viewer" #birdEyeViewDiv class="bird-eye-viewer" [style.height.px]="actualHeight" [style.width.px]="actualWidth">
+  <div *ngFor="let appearance of appearances" [popover]="myPopover" (mouseenter)="setObjectHover(appearance)"
+    [ngStyle]="{backgroundColor:appearance.collision?'red':'green',top:appearance.real_coordinates_adapted[1]+'px',left:appearance.real_coordinates_adapted[0]+'px'}" class="object">
 
   </div>
+  <canvas #canvas width="{{originalWidth}}" height="{{originalHeight}}" class="canvas w-100 h-100"></canvas>
+
 </div>
+
 <div>
-  <popover-content #myPopover title="{{objectHover?.object}}" placement="left" [animation]="true" [closeOnClickOutside]="true">
+  <popover-content #myPopover title="{{objectHover?.object}}" placement="left" [animation]="true" [closeOnClickOutside]="true" style="z-index:3">
     <img src="{{environment.apiUrl}}/videos/{{video.id}}/objects/{{objectHover?.object}}/{{objectHover?.frame}}" alt="">
   </popover-content>
 </div>

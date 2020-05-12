@@ -128,10 +128,8 @@ export class VideoAnalisisComponent implements OnInit,AfterViewInit{
             very_fast:false
           }),
           outfit:this.fb.group({
-            upper_color:'ffffff',
-            lower_color:'ffffff',
-            upper_valid:false,
-            lower_valid:false
+            upper_color:undefined,
+            lower_color:undefined
           })
   });
   }
@@ -170,6 +168,16 @@ export class VideoAnalisisComponent implements OnInit,AfterViewInit{
       this.action="path"
   }
 
+  setUpperColor(color){
+    console.log(color)
+    this.filterForm.get('outfit').get('upper_color').setValue(color);
+  }
+
+  setLowerColor(color){
+    console.log(color)
+    this.filterForm.get('outfit').get('lower_color').setValue(color);
+  }
+
   generateVideo(){
       if(!this.filterForm.valid) return;
       this.action="view"
@@ -181,8 +189,8 @@ export class VideoAnalisisComponent implements OnInit,AfterViewInit{
       f.time=this.filterForm.value.time;
       f.speed=this.filterForm.value.speed;
       f.outfit=new OutfitFilter()
-      f.outfit.upper_color=this.filterForm.value.outfit.upper_valid?this.filterForm.value.outfit.upper_color:null
-      f.outfit.lower_color=this.filterForm.value.outfit.lower_valid?this.filterForm.value.outfit.lower_color:null
+      f.outfit.upper_color=this.filterForm.value.outfit.upper_color
+      f.outfit.lower_color=this.filterForm.value.outfit.lower_color
       console.log(this.filterForm.value)
       this.showGeneratedVideo.next(f);
   }

@@ -11,6 +11,10 @@
   width: 33%;
 }
 
+.table-cell label{
+  border: black 2px solid;
+}
+
 mat-expansion-panel{
   background-color: #555;
 }

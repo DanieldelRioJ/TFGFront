@@ -23,6 +23,11 @@
   border-radius: 100%;
 }
 
+.lang-option{
+  font-size: 15px;
+  margin:0pX;
+}
+
 .example-container {
   display: flex;
   flex-direction: column;

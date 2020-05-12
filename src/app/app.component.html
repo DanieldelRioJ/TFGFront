@@ -7,19 +7,20 @@
 
     <span style="flex: 1 1 auto;"></span>
 
-    <mat-form-field style="width:70px">
+    <mat-form-field style="width:40px" color="accent">
       <mat-select required [value]="selectedLang" (selectionChange)="selectLang($event.value)">
         <mat-select-trigger>
-          <img class="image-flag" height="40px" src="/assets/lang/{{selectedLang}}.svg" alt="">
+          <p class="lang-option">{{selectedLang | uppercase}}</p>
         </mat-select-trigger>
         <mat-option value="gl" selected>
-          <img class="image-flag" src="/assets/lang/gl.svg" alt="">
+          <!--<img class="image-flag" src="/assets/lang/gl.svg" alt="">-->
+          <p class="lang-option">GL</p>
         </mat-option>
         <mat-option value="es">
-          <img class="image-flag" src="/assets/lang/es.svg" alt="">
+          <p class="lang-option">ES</p>
         </mat-option>
         <mat-option value="en">
-          <img class="image-flag" src="/assets/lang/en.svg" alt="">
+          <p class="lang-option">EN</p>
         </mat-option>
       </mat-select>
     </mat-form-field>
