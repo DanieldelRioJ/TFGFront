@@ -13,8 +13,8 @@ import { VideoService } from 'src/app/services/video.service';
 export class VideoDisplayerComponent implements OnInit, AfterViewInit {
     environment=environment;
 
-  @ViewChild('videoDisplayer', { static: false }) videoDisplayer: ElementRef;
-  @ViewChild('videoContainer', { static: false }) videoContainer: ElementRef;
+  @ViewChild('videoDisplayer') videoDisplayer: ElementRef;
+  @ViewChild('videoContainer') videoContainer: ElementRef;
 
   @Input() video:Video;
   @Input() settings:Subject<any>;
