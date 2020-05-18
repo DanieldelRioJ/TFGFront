@@ -6,7 +6,7 @@
       <button mat-button disabled>{{'breadcrumbs.objects' | translate}}</button>
     </mat-card>
   </nav>
-  <div class="container-fluid row mt-2">
+  <div class="img-layout mt-2">
 
     <div *ngFor="let object of objects | keyvalue">
       <div class="portrait" routerLink="/videos/{{video_id}}/objects/{{object.value.id}}">

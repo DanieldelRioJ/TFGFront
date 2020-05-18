@@ -14,3 +14,9 @@
 .portrait img{
     height: 200px;
 }
+
+.img-layout{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}

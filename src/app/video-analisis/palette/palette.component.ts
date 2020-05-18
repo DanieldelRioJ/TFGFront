@@ -10,7 +10,7 @@ export class PaletteComponent implements OnInit {
   @ViewChildren('colorDiv') colorDivs:QueryList<ElementRef>;
   @Output() change: EventEmitter<string> = new EventEmitter();
 
-  paletteColors=['blue','purple','pink','red','brown','yellow','green','white','grey','black']
+  paletteColors=['blue','purple','pink','red',/*'brown',*/'yellow','green','white','grey','black']
 
   chosenColor:string=undefined;
   chosenIndex:number=undefined;

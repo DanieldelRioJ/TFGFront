@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { VideoService } from './services/video.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UploadVideoModalComponent } from './modal/upload-video-modal/upload-video-modal.component';
 
 
 
@@ -25,7 +27,8 @@ export class AppComponent implements OnInit{
 
 
 
-    constructor(changeDetectorRef: ChangeDetectorRef,
+    constructor(private dialog: MatDialog,
+      changeDetectorRef: ChangeDetectorRef,
        media: MediaMatcher,private renderer:Renderer2,
        private translate: TranslateService,
        private videoService:VideoService) {
@@ -59,6 +62,10 @@ export class AppComponent implements OnInit{
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
+  onUploadClick(){
+    this.dialog.open(UploadVideoModalComponent)
   }
 
 }

@@ -1,4 +1,4 @@
-<mat-card class="container">
+<mat-card class="container-fluid">
   <section class="row">
     <article class="col-12 col-lg-7">
       <h4>{{'video.original-video' | translate}}</h4>
@@ -47,8 +47,8 @@
     <article class="info col-12 col-lg-5">
       <h4>Top View</h4>
       <mat-form-field color="accent">
-        <mat-label>Distancia:</mat-label>
-        <mat-select>
+        <mat-label>{{'video.distance' | translate}}:</mat-label>
+        <mat-select [(ngModel)]="meters">
           <mat-option [value]="1">
             1m
           </mat-option>
@@ -74,7 +74,7 @@
   <article class=row>
 
     <div class=" col-12">
-      <h4>Información</h4>
+      <h4>{{'video.information' | translate}}</h4>
       <p><b>{{'objects.video.title' | translate}}:</b> {{video?.title}}</p>
       <p><b>{{'objects.video.city' | translate}}:</b> {{video?.city}}</p>
       <p><b>{{'objects.video.description' | translate}}:</b></p>

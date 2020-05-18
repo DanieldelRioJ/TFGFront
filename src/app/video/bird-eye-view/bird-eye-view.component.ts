@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef,AfterContentInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Video } from 'src/app/objects/video';
 
 @Component({
   selector: 'app-bird-eye-view',
@@ -16,7 +17,27 @@ export class BirdEyeViewComponent implements OnInit,AfterContentInit {
 
   @Input() upperLeftLimit; //Uper left limit coordinates
   @Input() lowerRightLimit; //Lower right limit coordinates
-  @Input() video;
+
+  _video:Video;
+  @Input() set video(video:Video){
+    this._video=video;
+    this.originalWidth=Math.abs(this.lowerRightLimit[0]-this.upperLeftLimit[0])
+    this.originalHeight=Math.abs(this.lowerRightLimit[1]-this.upperLeftLimit[1])
+    this.actualWidth=400;
+    let ratio=this.originalHeight/this.originalWidth;
+    this.actualHeight=this.actualWidth*ratio;
+
+    this.scale=this.actualWidth/this.originalWidth;
+
+    this.offsetX=this.upperLeftLimit[0];
+    this.offsetY=this.upperLeftLimit[1];
+    this._appearances=[]
+    this.updateAppearanceCollisions();
+  };
+  get video():Video{
+    return this._video;
+  }
+
   @Input() meters:number;
 
   pointsEachMeter:number=50;
@@ -58,8 +79,6 @@ export class BirdEyeViewComponent implements OnInit,AfterContentInit {
 
     if(this.appearances==undefined) return;
 
-
-
     /*for(let i=0;i<this.appearances.length-1;i++){
       let apA:any=this.appearances[i];
 
@@ -77,15 +96,13 @@ export class BirdEyeViewComponent implements OnInit,AfterContentInit {
       }
     }*/
 
-
-
     if(this.canvasContext==undefined) {
       console.log("canvas context undefined")
       return;
     }
     //Draw lines between objects which doesnt keep distance
     this.canvasContext.clearRect(0,0,this.originalWidth,this.originalHeight)
-    this.canvasContext.lineWidth = 6;
+    this.canvasContext.lineWidth = this.originalWidth/100
     this.canvasContext.strokeStyle = "red";
 
     this.appearances.forEach((appearance:any)=>{

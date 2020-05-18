@@ -35,6 +35,9 @@ import { NotifierModule } from "angular-notifier";
 import {PopoverModule} from "ngx-smart-popover";
 import { BirdEyeViewComponent } from './video/bird-eye-view/bird-eye-view.component';
 import { PaletteComponent } from './video-analisis/palette/palette.component';
+import { UploadVideoModalComponent } from './modal/upload-video-modal/upload-video-modal.component';
+import {MaterialFileInputModule} from 'ngx-material-file-input'
+
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, '/assets/i18n/', '-lang.json');
@@ -54,7 +57,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     PerspectiveComponent,
     SettingsComponent,
     BirdEyeViewComponent,
-    PaletteComponent
+    PaletteComponent,
+    UploadVideoModalComponent
   ],
   imports: [
     BrowserModule,
@@ -81,6 +85,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MatNativeDateModule,
     MatRippleModule,
     MatTabsModule,
+    MaterialFileInputModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -90,6 +95,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     })
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[UploadVideoModalComponent]
 })
 export class AppModule { }

@@ -1,4 +1,9 @@
 {
+  "general-actions":{
+    "accept":"Accept",
+    "cancel":"Cancel"
+
+  },
   "main":{
     "filter":{
       "title":"Filter",
@@ -31,7 +36,9 @@
     "empty-background":"Empty background",
     "filter-button":"Filter",
     "watch-objects-button":"See objects",
-    "download-button":"Download"
+    "download-button":"Download",
+    "distance":"Distance",
+    "information":"Information"
   },
   "filter":{
     "generation-form":{
@@ -39,7 +46,9 @@
       "generate-button":"Generate",
       "appearance":{
         "title":"Appearance",
-        "description":"Define clothes colors"
+        "description":"Define clothes colors",
+        "upper-color":"Upper color",
+        "lower-color":"Lower color"
       },
       "time":{
         "title":"Time",
@@ -75,7 +84,11 @@
       }
     }
   },
-
+  "settings":{
+    "remove-perspective-points":"Remove perspective points",
+    "top-view-disabled":"Top View disabled",
+    "select-4-points":"Select 4 points"
+  },
 
   "objects":{
     "video":{

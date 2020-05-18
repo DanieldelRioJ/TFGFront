@@ -16,30 +16,28 @@
         <mat-card-content>
           <div *ngIf="coordinates">
             <button mat-raised-button color="warn" class="btn-block" (click)="removePerspectivePoints()">
-              Remove perspective poins
+              {{'settings.remove-perspective-points' | translate}}
             </button>
           </div>
           <div *ngIf="!coordinates" class="alert alert-danger" role="alert" matTooltip="Para activar la vista de pájaro, se deben de seleccionar en la imagen 4 puntos de referencia en el suelo que en la realidad forman un rectángulo.">
-            <p class="m-0">Vista de pájaro desactivada</p>
-            <p class="m-0 text-muted">Selecciona 4 puntos</p>
+            <p class="m-0">{{'settings.top-view-disabled' | translate}}</p>
+            <p class="m-0 text-muted">{{'settings.select-4-points' | translate}}</p>
           </div>
           <div *ngIf="video">
-            <div class="form-group">
-              <label for="title-input">Título</label>
-              <input type="text" class="form-control" id="title-input" [(ngModel)]="video.title">
-            </div>
-
-            <div class="form-group">
-              <label for="city-input">City</label>
-              <input type="text" class="form-control" id="city-input" [(ngModel)]="video.city">
-            </div>
-
-            <div class="form-group">
-              <label for="description-input">Description</label>
-              <textarea class="form-control" id="description-input" rows="3" [(ngModel)]="video.description"></textarea>
-            </div>
+            <mat-form-field class="w-100" appearance="standard" color="accent">
+              <mat-label>{{'objects.video.title' | translate}}</mat-label>
+              <input matInput placeholder="Campus sur" id="title-input" [(ngModel)]="video.title">
+            </mat-form-field>
+            <mat-form-field class="w-100" appearance="standard" color="accent">
+              <mat-label>{{'objects.video.city' | translate}}</mat-label>
+              <input matInput placeholder="Santiago de Compostela" id="city-input" [(ngModel)]="video.city">
+            </mat-form-field>
+            <mat-form-field color="accent" appearance="standard" class="w-100">
+              <mat-label>{{'objects.video.description' | translate}}</mat-label>
+              <textarea matInput placeholder="Vídeo grabado en ..." id="description-input" rows="3" [(ngModel)]="video.description"></textarea>
+            </mat-form-field>
           </div>
-          <button (click)="update()" class="btn btn-success btn-block">Aceptar</button>
+          <button (click)="update()" mat-raised-button color="accent" class="btn-block">{{'general-actions.accept' | translate}}</button>
 
 
         </mat-card-content>

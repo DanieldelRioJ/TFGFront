@@ -34,6 +34,7 @@ export class VideoComponent implements AfterViewInit {
     actualAppearances=[];
     actualFrame:number;
     playingVideo:boolean=false;
+    meters:number=1;
 
   constructor(private route:ActivatedRoute,
     private videoService:VideoService,
@@ -56,6 +57,7 @@ export class VideoComponent implements AfterViewInit {
       let video_id = params.get("video_id");
       this.videoService.getVideo(video_id).subscribe(video=>{
           this.video=video;
+          console.log(video)
           this.videoService.getFrameMap(video.id).subscribe(frameMap=>{
             this.frameMap=frameMap;
             this.updateBirdEyeView();
@@ -71,27 +73,12 @@ export class VideoComponent implements AfterViewInit {
     let actualFrame=Math.round(currentTime*this.video.fps_adapted)+1;
 
 
-    if(this.actualFrame!=actualFrame && this.video.perspective){
+    if(this.actualFrame!=actualFrame ){
+
+      //Update relative coordinates (to div)
       let actualAppearances=this.frameMap[actualFrame]
       if(actualAppearances==undefined) return;
       this.actualFrame=actualFrame;
-      for(let i=0;i<actualAppearances.length-1;i++){
-        let apA:any=actualAppearances[i];
-
-        for(let j=i+1;j<actualAppearances.length;j++){
-          let apB:any=actualAppearances[j];
-          if(this.distance(apA.real_coordinates[0],apA.real_coordinates[1],apB.real_coordinates[0],apB.real_coordinates[1])<100){
-            if(apA.collision==undefined){
-              apA.collision=[]
-            }
-            if(apB.collision==undefined){
-              apB.collision=[]
-            }
-            apA.collision.push(j);
-          }
-        }
-      }
-
       let videoWidth=this.videoElement.nativeElement.offsetWidth;
       let videoHeight=this.videoElement.nativeElement.offsetHeight;
       actualAppearances.forEach((appearance: any)=>{
@@ -103,25 +90,58 @@ export class VideoComponent implements AfterViewInit {
       })
       this.actualAppearances=actualAppearances;
 
-      this.canvasContext.clearRect(0,0,this.video.width,this.video.height)
+      //Check collisions
+      if(this.video.perspective){
+        actualAppearances.forEach(appearance=>appearance.collision=undefined) //clear old collisions
 
-      this.actualAppearances.forEach((appearance:any)=>{
-        if(appearance.collision!=undefined){
-          appearance.collision.forEach(index_collision=>{
-            this.canvasContext.lineWidth=4
-            this.canvasContext.strokeStyle='red'
-            this.canvasContext.beginPath();
-            this.canvasContext.moveTo(appearance.center_col,appearance.center_row)
+        for(let i=0;i<actualAppearances.length-1;i++){
+          let apA:any=actualAppearances[i];
 
-            let collisionElement:any=this.actualAppearances[index_collision]
-            this.canvasContext.lineTo(collisionElement.center_col,collisionElement.center_row)
-            this.canvasContext.stroke();
-            this.canvasContext.closePath();
-          })
+          for(let j=i+1;j<actualAppearances.length;j++){
+            let apB:any=actualAppearances[j];
+            if(this.distance(apA.real_coordinates[0],apA.real_coordinates[1],apB.real_coordinates[0],apB.real_coordinates[1])/this.video.perspective.one_meter-0.7<this.meters){
+              if(apA.collision==undefined){
+                apA.collision=[]
+              }
+              if(apB.collision==undefined){
+                apB.collision=[]
+              }
+              apA.collision.push(j);
+            }
+          }
         }
-      })
-    }
 
+
+        //Draw lines in canvas
+        this.canvasContext.clearRect(0,0,this.video.width,this.video.height)
+        let lineWidth=this.video.width*4/1000
+        let fontSize=Math.round(this.video.width*25/1000)
+
+        this.actualAppearances.forEach((appearance:any)=>{
+          if(appearance.collision!=undefined){
+            appearance.collision.forEach(index_collision=>{
+              this.canvasContext.lineWidth=lineWidth
+              this.canvasContext.strokeStyle='red'
+              this.canvasContext.beginPath();
+              this.canvasContext.moveTo(appearance.center_col,appearance.center_row)
+
+              let collisionElement:any=this.actualAppearances[index_collision]
+              this.canvasContext.lineTo(collisionElement.center_col,collisionElement.center_row)
+              this.canvasContext.stroke();
+              this.canvasContext.closePath();
+
+              this.canvasContext.textAlign="center"
+              this.canvasContext.shadowColor="black"
+              this.canvasContext.fillStyle='white'
+              this.canvasContext.font=fontSize+"px Arial"
+              this.canvasContext.shadowBlur = 4;
+              this.canvasContext.fillText(""+(this.distance(appearance.real_coordinates[0],appearance.real_coordinates[1],collisionElement.real_coordinates[0],collisionElement.real_coordinates[1])/this.video.perspective.one_meter-0.7).toFixed(2)
+              ,(appearance.center_col+collisionElement.center_col)/2,(appearance.center_row+collisionElement.center_row)/2)
+            })
+          }
+        })
+      }
+    }
   }
   distance(x1,y1,x2,y2){
     return Math.sqrt(Math.pow(x1-x2,2)+Math.pow(y1-y2,2))
@@ -134,9 +154,8 @@ export class VideoComponent implements AfterViewInit {
   }
 
   updateDisplayer(event){
-  
+
     let currentTime=this.video.frame_quantity_adapted*(event.offsetX/this.seekElement.nativeElement.clientWidth)/this.video.fps_adapted
-    console.log(currentTime)
     this.videoElement.nativeElement.currentTime=currentTime
   }
 

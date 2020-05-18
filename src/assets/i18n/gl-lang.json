@@ -1,4 +1,9 @@
 {
+  "general-actions":{
+    "accept":"Aceptar",
+    "cancel":"Cancelar"
+
+  },
   "main":{
     "filter":{
       "title":"Filtro",
@@ -31,7 +36,9 @@
     "empty-background":"Fondo vacío",
     "filter-button":"Filtrar",
     "watch-objects-button":"Ver obxetos",
-    "download-button":"Descargar"
+    "download-button":"Descargar",
+    "distance":"Distancia",
+    "information":"Información"
   },
   "filter":{
     "generation-form":{
@@ -39,7 +46,9 @@
       "generate-button":"Xenerar",
       "appearance":{
         "title":"Apariencia",
-        "description":"Defina cores da vestimenta"
+        "description":"Defina cores da vestimenta",
+        "upper-color":"Cor superior",
+        "lower-color":"Cor inferior"
       },
       "time":{
         "title":"Tempo",
@@ -75,7 +84,11 @@
       }
     }
   },
-
+  "settings":{
+    "remove-perspective-points":"Eliminar os puntos de perspectiva",
+    "top-view-disabled":"Top View desactivada",
+    "select-4-points":"Selecciona 4 puntos"
+  },
 
   "objects":{
     "video":{
@@ -91,7 +104,7 @@
     "object":{
       "details":"Detalles",
       "path":"Ruta",
-      "video":"Video",
+      "video":"Vídeo",
       "image":"Imaxe",
       "appearance-range":"Rango de aparición",
       "average-speed":"Velocidade media",
@@ -100,7 +113,7 @@
   },
   "breadcrumbs":{
     "home":"Inicio",
-    "video":"Video",
+    "video":"Vídeo",
     "objects":"Obxetos",
     "filter":"Filtro",
     "settings":"Axustes"

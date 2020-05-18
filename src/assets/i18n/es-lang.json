@@ -1,4 +1,9 @@
 {
+  "general-actions":{
+    "accept":"Aceptar",
+    "cancel":"Cancelar"
+
+  },
   "main":{
     "filter":{
       "title":"Filtro",
@@ -31,7 +36,9 @@
     "empty-background":"Fondo vacío",
     "filter-button":"Filtrar",
     "watch-objects-button":"Ver objetos",
-    "download-button":"Descargar"
+    "download-button":"Descargar",
+    "distance":"Distancia",
+    "information":"Información"
   },
   "filter":{
     "generation-form":{
@@ -39,7 +46,9 @@
       "generate-button":"Generar",
       "appearance":{
         "title":"Apariencia",
-        "description":"Defina colores de la vestimenta"
+        "description":"Defina colores de la vestimenta",
+        "upper-color":"Color superior",
+        "lower-color":"Color inferior"
       },
       "time":{
         "title":"Tiempo",
@@ -75,6 +84,11 @@
       }
     }
   },
+  "settings":{
+    "remove-perspective-points":"Eliminar los puntos de perspectiva",
+    "top-view-disabled":"Top View desactivada",
+    "select-4-points":"Selecciona 4 puntos"
+  },
 
 
   "objects":{
@@ -91,7 +105,7 @@
     "object":{
       "details":"Detalles",
       "path":"Ruta",
-      "video":"Video",
+      "video":"Vídeo",
       "image":"Imagen",
       "appearance-range":"Rango de aparición",
       "average-speed":"Velocidad media",
@@ -100,7 +114,7 @@
   },
   "breadcrumbs":{
     "home":"Inicio",
-    "video":"Video",
+    "video":"Vídeo",
     "objects":"Objetos",
     "filter":"Filtro",
     "settings":"Ajustes"
