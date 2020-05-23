@@ -14,6 +14,8 @@ export class MainComponent implements OnInit {
     videos:[Video]
     order=0;
 
+    maxDate=new Date();
+
     constructor(private videoService:VideoService){
     }
 

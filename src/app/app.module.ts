@@ -20,13 +20,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { VideoObjectsComponent } from './video/video-objects/video-objects.component';
 import { ObjectDisplayerComponent } from './video-analisis/object-displayer/object-displayer.component';
 import {MatSelectModule} from '@angular/material/select'
-import {MatInputModule, MatToolbarModule,MatSidenavModule,MatListModule, MatDatepickerModule, MatNativeDateModule, MatCardModule, MatRippleModule, MatTabsModule} from '@angular/material';
+import {MatInputModule, MatToolbarModule,MatSidenavModule,MatListModule, MatDatepickerModule, MatNativeDateModule, MatCardModule, MatRippleModule, MatTabsModule, MatDialogModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { PerspectiveComponent } from './video/perspective/perspective.component';
@@ -38,10 +41,16 @@ import { PaletteComponent } from './video-analisis/palette/palette.component';
 import { UploadVideoModalComponent } from './modal/upload-video-modal/upload-video-modal.component';
 import {MaterialFileInputModule} from 'ngx-material-file-input'
 
+import { environment } from 'src/environments/environment';
+
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:5000', options: {} };
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, '/assets/i18n/', '-lang.json');
 }
+
 
 @NgModule({
   declarations: [
@@ -86,6 +95,11 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MatRippleModule,
     MatTabsModule,
     MaterialFileInputModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    DragDropModule,
+    SocketIoModule.forRoot(config),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

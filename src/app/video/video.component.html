@@ -48,20 +48,10 @@
       <h4>Top View</h4>
       <mat-form-field color="accent">
         <mat-label>{{'video.distance' | translate}}:</mat-label>
-        <mat-select [(ngModel)]="meters">
-          <mat-option [value]="1">
-            1m
-          </mat-option>
-          <mat-option [value]="2">
-            2m
-          </mat-option>
-          <mat-option [value]="5">
-            5m
-          </mat-option>
-        </mat-select>
+        <input type="number" min="1" step="1" matInput [(ngModel)]="meters" required>
       </mat-form-field>
       <ng-container *ngIf="video?.perspective">
-        <app-bird-eye-view [video]="video" [upperLeftLimit]=video.perspective.upper_left_limit [lowerRightLimit]="video.perspective.lower_right_limit" [appearances]="actualAppearances"></app-bird-eye-view>
+        <app-bird-eye-view [video]="video" [appearances]="actualAppearances"></app-bird-eye-view>
 
 
       </ng-container>

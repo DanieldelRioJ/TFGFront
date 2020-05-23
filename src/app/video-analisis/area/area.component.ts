@@ -59,7 +59,7 @@ export class AreaComponent implements OnInit, AfterViewInit {
       this.canvas.nativeElement.width=this.background.nativeElement.width;
       this.canvas.nativeElement.height=this.background.nativeElement.height;
       this.canvasContext.drawImage(this.background.nativeElement,0,0,this.canvas.nativeElement.width,this.canvas.nativeElement.height)
-      this.canvasContext.lineWidth=10
+      this.canvasContext.lineWidth=2
       this.canvasContext.strokeStyle="red";
 
   }
@@ -82,8 +82,10 @@ export class AreaComponent implements OnInit, AfterViewInit {
   drawPolygon(){
       this.canvasContext.clearRect(0,0,this.canvas.nativeElement.width,this.canvas.nativeElement.height);
       this.canvasContext.drawImage(this.background.nativeElement,0,0,this.canvas.nativeElement.width,this.canvas.nativeElement.height)
+      this.canvasContext.fillStyle="#ff0000"
+      //Draw point if we have just 1 point selected
+      if(this.coordinates.length==1)this.canvasContext.fillRect(this.coordinates[0].x, this.coordinates[0].y,5,5);
       this.canvasContext.fillStyle="#ff000050"
-      this.canvasContext.fillRect(this.coordinates[0].x, this.coordinates[0].y,5,5);
       this.canvasContext.beginPath();
       this.canvasContext.moveTo(this.coordinates[0].x, this.coordinates[0].y);
       for(let index=1; index<this.coordinates.length;index++) {

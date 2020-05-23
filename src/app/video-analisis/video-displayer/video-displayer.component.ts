@@ -4,6 +4,7 @@ import { Subject } from 'rxjs/internal/Subject';
 import { Filter } from 'src/app/objects/filter/filter';
 import { environment } from 'src/environments/environment';
 import { VideoService } from 'src/app/services/video.service';
+import { VideoProgressService } from 'src/app/services/video-progress.service';
 
 @Component({
   selector: 'app-video-displayer',
@@ -35,10 +36,13 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
   sourceBuffer:SourceBuffer;
   actualTime:number=0;
 
+ loading:boolean=false;
+ generationProgress:number=0
 
 
   constructor(private renderer: Renderer2,
-        private videoService:VideoService) { }
+        private videoService:VideoService,
+        private videoProgress:VideoProgressService) { }
 
   ngOnInit() {
   }
@@ -49,9 +53,14 @@ export class VideoDisplayerComponent implements OnInit, AfterViewInit {
     this.renderer.listen(this.videoDisplayer.nativeElement,'mozfullscreenchange',this.onFullScreen);
     this.renderer.listen(this.videoDisplayer.nativeElement,'fullscreenchange',this.onFullScreen);
       this.settings.subscribe(filter=>{
-          debugger;
+        this.generationProgress=0
+        this.loading=true
+          this.videoProgress.listenToVirtualVideoProgress(filter.id,(data)=>{console.log(data);this.generationProgress=data.progress});
+
           this.filter=filter
           this.videoService.generateVirtualVideo(this.video.id,filter).subscribe(json=>{
+            this.loading=false
+            this.videoProgress.stopListeningToVirtualVideoProgress()
               //Si ya hemos visualizado un resumen, limpiamos el buffer
               if(this.sourceBuffer!=undefined) {
                 while(this.sourceBuffer.updating){}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-upload-video-modal',
@@ -8,9 +9,27 @@ import { MatDialogRef } from '@angular/material';
 })
 export class UploadVideoModalComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<UploadVideoModalComponent>) { }
+  uploadForm:FormGroup=this.fb.group({
+    video:[undefined,Validators.required],
+    annotations:[undefined,Validators.required],
+    title:['',Validators.required],
+    city:[''],
+    description:[''],
+    recorded_date:[undefined]
+  })
+
+  maxDate=new Date();
+
+  constructor(private dialogRef: MatDialogRef<UploadVideoModalComponent>,
+              private fb:FormBuilder) { }
 
   ngOnInit() {
+
+  }
+
+  okClick(){
+    debugger;
+    this.dialogRef.close(this.uploadForm.value)
   }
 
   onNoClick(){

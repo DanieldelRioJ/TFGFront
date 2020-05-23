@@ -30,10 +30,12 @@
               </mat-expansion-panel-header>
               <hr>
               <!--<p>Choose upper color <input type="color" formControlName="upper_color"> Activado:<input type="checkbox" formControlName="upper_valid"></p>-->
-              <p>{{'filter.generation-form.appearance.upper-color'| translate}}: <app-palette (change)="setUpperColor($event)"></app-palette>
-              </p>
-              <p>{{'filter.generation-form.appearance.lower-color'| translate}}: <app-palette (change)="setLowerColor($event)"></app-palette>
-              </p>
+              <div class="palettes-container">
+                <p>{{'filter.generation-form.appearance.upper-color'| translate}}:</p>
+                <app-palette (change)="setUpperColor($event)"></app-palette>
+                <p>{{'filter.generation-form.appearance.lower-color'| translate}}:</p>
+                <app-palette (change)="setLowerColor($event)"></app-palette>
+              </div>
             </mat-expansion-panel>
             <mat-expansion-panel formGroupName="time">
               <mat-expansion-panel-header>
@@ -46,8 +48,14 @@
                 </mat-panel-description>
               </mat-expansion-panel-header>
               <hr>
-              <p>{{'filter.generation-form.time.from'| translate}}:<input class="form-control" type="time" placeholder="00:00:00" min="00:00:00" step="1" formControlName="start"></p>
-              <p>{{'filter.generation-form.time.to'| translate}}:<input class="form-control" type="time" min="00:00:00" step="1" formControlName="end"></p>
+              <mat-form-field color="accent" class="w-100">
+                <mat-label>{{'filter.generation-form.social-distance.distance'| translate}} (m)</mat-label>
+                <input matInput type="time" autocomplete="off" formControlName="distance" placeholder="00:00:00" min="00:00:00" step="1" formControlName="start">
+              </mat-form-field>
+              <mat-form-field color="accent" class="w-100">
+                <mat-label>{{'filter.generation-form.social-distance.distance'| translate}} (m)</mat-label>
+                <input matInput type="time" autocomplete="off" formControlName="distance" placeholder="00:00:00" min="00:00:00" step="1" formControlName="end">
+              </mat-form-field>
             </mat-expansion-panel>
             <mat-expansion-panel>
               <mat-expansion-panel-header>
@@ -137,9 +145,19 @@
                   </div>
                 </div>
               </div>
-
-              <h3>{{'filter.generation-form.path.speed.title'| translate}}</h3>
-              <div class="checkbox-group" formGroupName="speed">
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <fa-icon class=" mr-2" [icon]="speedIcon"></fa-icon>
+                  <b>{{'filter.generation-form.speed.title'| translate}}</b>
+                </mat-panel-title>
+                <mat-panel-description>
+                  {{'filter.generation-form.speed.description'| translate}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <hr>
+              <div class="checkbox-group speed-checkboxes" formGroupName="speed">
                 <div>
                   <input id="very-slow" type="checkbox" formControlName="very_slow">
                   <label for="very-slow" class="btn btn-secondary">
@@ -171,23 +189,23 @@
                   </label>
                 </div>
               </div>
-
-
             </mat-expansion-panel>
-            <mat-expansion-panel formGroupName="velocity">
+            <mat-expansion-panel formGroupName="social_distance">
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  <fa-icon class=" mr-2" [icon]="speedIcon"></fa-icon>
-                  <b>{{'filter.generation-form.speed.title'| translate}}</b>
+                  <fa-icon class=" mr-2" [icon]="socialDistanceIcon"></fa-icon>
+                  <b>{{'filter.generation-form.social-distance.title'| translate}}</b>
                 </mat-panel-title>
                 <mat-panel-description>
-                  {{'filter.generation-form.speed.description'| translate}}
+                  {{'filter.generation-form.social-distance.description'| translate}}
                 </mat-panel-description>
               </mat-expansion-panel-header>
               <hr>
-              <p>{{'filter.generation-form.speed.min'| translate}}:<input class="form-control" placeholder="0" type="number" step="0.1" formControlName="min"></p>
-              <p>{{'filter.generation-form.speed.max'| translate}}:<input class="form-control" placeholder="0" type="number" step="0.1" formControlName="max"></p>
-              <p>{{'filter.generation-form.speed.time'| translate}}:<input class="form-control" placeholder="0" type="number" step="1" formControlName="time"></p>
+              <mat-form-field color="accent" class="w-100">
+                <mat-label>{{'filter.generation-form.social-distance.distance'| translate}} (m)</mat-label>
+                <input matInput type="number" autocomplete="off" step="1" min="1" formControlName="distance">
+              </mat-form-field>
+
             </mat-expansion-panel>
           </mat-accordion>
           <button mat-raised-button color="primary" class="mt-2 btn-block" type="submit">

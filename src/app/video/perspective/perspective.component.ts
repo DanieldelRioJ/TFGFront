@@ -18,7 +18,10 @@ export class PerspectiveComponent implements OnInit {
   @ViewChild('canvas', { static: true }) canvas: ElementRef<HTMLCanvasElement>;
   @ViewChild('background', { static: true }) background: ElementRef<HTMLImageElement>;
 
+
   coordinates:{x:number,y:number}[];
+  screenCoordinates;
+  dragging:boolean=false;
   canvasContext:CanvasRenderingContext2D;
 
   strokeStyles=['red','green']
@@ -37,7 +40,7 @@ export class PerspectiveComponent implements OnInit {
         console.log(this.coordinates)
       }
       if(this.reset!=undefined) {
-        this.reset.subscribe(_=>{this.coordinates=undefined;this.init()})
+        this.reset.subscribe(_=>{this.coordinates=undefined;this.addScreenCoordinates();this.init()})
       }
   }
 
@@ -62,7 +65,7 @@ export class PerspectiveComponent implements OnInit {
         this.isDone=true;
       }
       this.drawPolygon();
-
+      this.addScreenCoordinates();
 
     }
 
@@ -81,19 +84,21 @@ export class PerspectiveComponent implements OnInit {
   }
 
   clickFunction(e){
-      if(this.isDone || this.coordinates.length>3){console.log("There is already have 4 coordinates");return;}
+      if(this.isDone || this.coordinates.length>3){console.log("There is already 4 coordinates");return;}
 
       // tell the browser we're handling this event
       e.preventDefault();
       e.stopPropagation();
+      console.log(e)
 
       let mouseX=parseInt(e.offsetX);
       let mouseY=parseInt(e.offsetY);
       let coordinate=this.getRealCanvasCoordinate(mouseX,mouseY)
-      this.coordinates.push({x:Math.round(coordinate[0]),y:Math.round(coordinate[1])});
+      this.coordinates.push({x:Math.round(coordinate.x),y:Math.round(coordinate.y)});
+      this.addScreenCoordinates() //Update screen coordinates. Used for dragging
       this.drawPolygon();
       if(this.coordinates.length==4){
-        this.drawn.emit(this.coordinates)
+        this.notifySelectedPoints();
       }
   }
 
@@ -101,10 +106,11 @@ export class PerspectiveComponent implements OnInit {
   drawPolygon(){
     if(this.coordinates.length==0)return;
       //Reset canvas
-      this.canvasContext.clearRect(0,0,this.canvas.nativeElement.width,this.canvas.nativeElement.height);
+      this.canvasContext.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
       this.canvasContext.drawImage(this.background.nativeElement,0,0,this.canvas.nativeElement.width,this.canvas.nativeElement.height)
 
       this.canvasContext.fillRect(this.coordinates[0].x, this.coordinates[0].y,5,5); //First point, we use it to tell user that first point is marked
+      this.canvasContext.beginPath();//ADD THIS LINE!<<<<<<<<<<<<<
       this.canvasContext.moveTo(this.coordinates[0].x, this.coordinates[0].y);
       for(let index=1; index<this.coordinates.length;index++) {
         this.canvasContext.lineTo(this.coordinates[index].x, this.coordinates[index].y);
@@ -121,16 +127,51 @@ export class PerspectiveComponent implements OnInit {
       this.coordinates.forEach((coordinate,index)=>{this.canvasContext.fillText(index+"",coordinate.x, coordinate.y)})
     }
 
-  getRealCanvasCoordinate(x,y){
+  getRealCanvasCoordinate(x,y):{x:number,y:number}{
       x=this.canvas.nativeElement.width*x/this.canvas.nativeElement.clientWidth;
       y=this.canvas.nativeElement.height*y/this.canvas.nativeElement.clientHeight;
-      return [x,y]
+      return {x:x,y:y}
   }
 
   convertCoordinatesFormat(coordinates){
     coordinates.forEach(function(coordinate, index) {
         this[index] ={x:coordinate[0],y:coordinate[1]};
       }, coordinates);
+  }
+
+  dragged(event,i){
+
+    let position=event.source.getFreeDragPosition()
+
+    position=this.getRealCanvasCoordinate(position.x, position.y)
+
+    this.coordinates[i].x=position.x
+    this.coordinates[i].y=position.y
+
+    this.drawPolygon();
+
+  }
+
+  dragReleased(event){
+
+  }
+
+  notifySelectedPoints(){
+    if(this.coordinates.length==4){
+      this.drawn.emit(this.coordinates)
+    }
+  }
+
+  addScreenCoordinates(){
+    let coordinates=[]
+    if(this.coordinates==undefined) return coordinates
+    this.coordinates.forEach(coordinate=>{
+      let x=coordinate.x*this.canvas.nativeElement.clientWidth/this.canvas.nativeElement.width;
+      let y=coordinate.y*this.canvas.nativeElement.clientHeight/this.canvas.nativeElement.height;
+      coordinates.push({x:x,y:y})
+
+    })
+    this.screenCoordinates=coordinates;
   }
 
 }

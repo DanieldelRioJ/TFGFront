@@ -1,2 +1,7 @@
-<canvas #canvas class="w-100"></canvas>
+<div class="example-boundary">
+  <canvas #canvas class="w-100"></canvas>
+  <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag [cdkDragFreeDragPosition]="coordinate" *ngFor="let coordinate of screenCoordinates; index as i" (cdkDragReleased)="dragReleased($event)" (cdkDragMoved)="dragged($event,i)">
+  </div>
+</div>
+
 <img #background class="w-100 d-none" src="{{environment.apiUrl}}/videos/{{video?.id}}/background" alt="Imagen background sin objetos">

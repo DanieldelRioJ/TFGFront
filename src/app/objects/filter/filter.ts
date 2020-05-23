@@ -7,4 +7,6 @@ export class Filter{
     speed;
     velocity;
     outfit;
+    social_distance;
+    id;
 }

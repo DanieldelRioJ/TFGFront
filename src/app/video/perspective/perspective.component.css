@@ -1,3 +1,28 @@
 canvas{
     cursor:crosshair;
+    display: block;
+}
+
+.example-box {
+  position:absolute;
+  top:0px;
+  left:0px;
+  width: 10px;
+  height: 10px;
+  border: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  border-radius: 100%;
+  cursor: move;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #fff;
+  border-radius: 4px;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.example-boundary{
+  position:relative;
 }

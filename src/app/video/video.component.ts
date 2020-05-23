@@ -99,7 +99,7 @@ export class VideoComponent implements AfterViewInit {
 
           for(let j=i+1;j<actualAppearances.length;j++){
             let apB:any=actualAppearances[j];
-            if(this.distance(apA.real_coordinates[0],apA.real_coordinates[1],apB.real_coordinates[0],apB.real_coordinates[1])/this.video.perspective.one_meter-0.7<this.meters){
+            if(this.distance(apA.real_coordinates[0],apA.real_coordinates[1],apB.real_coordinates[0],apB.real_coordinates[1])/this.video.perspective.one_meter<this.meters+0.7){
               if(apA.collision==undefined){
                 apA.collision=[]
               }
@@ -107,6 +107,7 @@ export class VideoComponent implements AfterViewInit {
                 apB.collision=[]
               }
               apA.collision.push(j);
+              console.log(this.actualFrame)
             }
           }
         }

@@ -19,6 +19,16 @@ mat-expansion-panel{
   background-color: #555;
 }
 
+.palettes-container{
+  display: grid;
+  grid-template-columns: 25% auto;
+  grid-template-rows: auto auto;
+}
+
+.speed-checkboxes>div{
+  display: inline-block;
+  margin-right: 5px;
+}
 
 .checkbox-group input:checked + label,.table-cell input:checked + label{
   background-color: red;

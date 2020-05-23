@@ -15,22 +15,29 @@ export class BirdEyeViewComponent implements OnInit,AfterContentInit {
   @ViewChild('canvas',{static:true}) canvasElement:ElementRef;
   canvasContext:CanvasRenderingContext2D;
 
-  @Input() upperLeftLimit; //Uper left limit coordinates
-  @Input() lowerRightLimit; //Lower right limit coordinates
+  upperLeftLimit=0;
+
+  lowerRightLimit=0; //Lower right limit coordinates
 
   _video:Video;
   @Input() set video(video:Video){
+    this.lowerRightLimit=video.perspective.lower_right_limit
+    this.upperLeftLimit=video.perspective.upper_left_limit
+
     this._video=video;
     this.originalWidth=Math.abs(this.lowerRightLimit[0]-this.upperLeftLimit[0])
     this.originalHeight=Math.abs(this.lowerRightLimit[1]-this.upperLeftLimit[1])
     this.actualWidth=400;
+
+    this.offsetX=this.upperLeftLimit[0];
+    this.offsetY=this.upperLeftLimit[1];
+
     let ratio=this.originalHeight/this.originalWidth;
     this.actualHeight=this.actualWidth*ratio;
 
     this.scale=this.actualWidth/this.originalWidth;
 
-    this.offsetX=this.upperLeftLimit[0];
-    this.offsetY=this.upperLeftLimit[1];
+
     this._appearances=[]
     this.updateAppearanceCollisions();
   };
@@ -63,7 +70,7 @@ export class BirdEyeViewComponent implements OnInit,AfterContentInit {
 
   scale=0;
 
-  objectHover="Nanai";
+  objectHover:any="Nanai";
 
 
   constructor() { }
@@ -78,24 +85,6 @@ export class BirdEyeViewComponent implements OnInit,AfterContentInit {
 
 
     if(this.appearances==undefined) return;
-
-    /*for(let i=0;i<this.appearances.length-1;i++){
-      let apA:any=this.appearances[i];
-
-      for(let j=i+1;j<this.appearances.length;j++){
-        let apB:any=this.appearances[j];
-        if(this.distance(apA.real_coordinates[0],apA.real_coordinates[1],apB.real_coordinates[0],apB.real_coordinates[1])<this.pointsEachMeter){
-          if(apA.collision==undefined){
-            apA.collision=[]
-          }
-          if(apB.collision==undefined){
-            apB.collision=[]
-          }
-          apA.collision.push(j);
-        }
-      }
-    }*/
-
     if(this.canvasContext==undefined) {
       console.log("canvas context undefined")
       return;

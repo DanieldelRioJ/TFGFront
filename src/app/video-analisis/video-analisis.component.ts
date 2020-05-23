@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { Video } from '../objects/video';
 import { VideoService } from '../services/video.service';
 import { ActivatedRoute } from '@angular/router';
-import { faVideo,faTachometerAlt,faRoad,faClock, faTshirt,faAngleUp} from '@fortawesome/free-solid-svg-icons';
+import { faVideo,faTachometerAlt,faRoad,faClock, faTshirt,faAngleUp,faPeopleArrows} from '@fortawesome/free-solid-svg-icons';
 import { Subject } from 'rxjs/internal/Subject';
 import { PathFilter } from '../objects/filter/path-filter';
 import { TimeFilter } from '../objects/filter/time-filter';
@@ -37,6 +37,7 @@ export class VideoAnalisisComponent implements OnInit,AfterViewInit{
     pathIcon=faRoad;
     speedIcon=faTachometerAlt;
     angleIcon=faAngleUp;
+    socialDistanceIcon=faPeopleArrows;
 
     //environment
     environment=environment;
@@ -100,11 +101,6 @@ export class VideoAnalisisComponent implements OnInit,AfterViewInit{
         })
       })
       this.filterForm = this.fb.group({
-          velocity:this.fb.group({
-              min:[null,Validators.min(0)],
-              max:[null,Validators.min(0)],
-              time:[null,Validators.min(0)]
-          },{validator:RangeValidator}),
           time:this.fb.group({
               start:[null],
               end:[null]
@@ -130,7 +126,11 @@ export class VideoAnalisisComponent implements OnInit,AfterViewInit{
           outfit:this.fb.group({
             upper_color:undefined,
             lower_color:undefined
+          }),
+          social_distance:this.fb.group({
+            distance:undefined
           })
+
   });
   }
 
@@ -183,7 +183,6 @@ export class VideoAnalisisComponent implements OnInit,AfterViewInit{
       this.action="view"
       let f:Filter=new Filter();
       f.direction=this.filterForm.value.direction;
-      f.velocity=this.filterForm.value.velocity;
       f.location=this.pathFilter
       f.area=this.areaFilter
       f.time=this.filterForm.value.time;
@@ -191,6 +190,8 @@ export class VideoAnalisisComponent implements OnInit,AfterViewInit{
       f.outfit=new OutfitFilter()
       f.outfit.upper_color=this.filterForm.value.outfit.upper_color
       f.outfit.lower_color=this.filterForm.value.outfit.lower_color
+      f.social_distance=this.filterForm.value.social_distance;
+      f.id=new Date().getTime()+""
       console.log(this.filterForm.value)
       this.showGeneratedVideo.next(f);
   }

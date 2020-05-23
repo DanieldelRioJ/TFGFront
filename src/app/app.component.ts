@@ -8,6 +8,9 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { VideoService } from './services/video.service';
 import { MatDialog } from '@angular/material/dialog';
 import { UploadVideoModalComponent } from './modal/upload-video-modal/upload-video-modal.component';
+import { HttpEventType } from '@angular/common/http';
+
+import { VideoProgressService } from './services/video-progress.service';
 
 
 
@@ -25,13 +28,19 @@ export class AppComponent implements OnInit{
 
     videos;
 
+    uploading=false;
+    uploadPercentage=0;
+
 
 
     constructor(private dialog: MatDialog,
       changeDetectorRef: ChangeDetectorRef,
        media: MediaMatcher,private renderer:Renderer2,
        private translate: TranslateService,
-       private videoService:VideoService) {
+       private videoService:VideoService,
+       private videoProgress:VideoProgressService) {
+
+
 
       translate.setDefaultLang('es');
 
@@ -45,6 +54,8 @@ export class AppComponent implements OnInit{
 
 
     selectLang(lang){
+      //this.videoProgress.sendMessage(lang)
+
       this.selectedLang=lang;
       this.translate.use(lang);
     }
@@ -65,7 +76,21 @@ export class AppComponent implements OnInit{
   }
 
   onUploadClick(){
-    this.dialog.open(UploadVideoModalComponent)
+    let uploadDialog=this.dialog.open(UploadVideoModalComponent)
+    uploadDialog.afterClosed().subscribe(result=>{
+      if(result==undefined) return;
+      console.log(result)
+      this.videoService.uploadVideo(result).subscribe(event=>{
+
+        if(event.type===HttpEventType.UploadProgress){
+          this.uploading=true;
+          this.uploadPercentage=Math.round((event.loaded/event.total)*100)
+        }else if(event.type===HttpEventType.Response){
+          this.uploading=false
+        }
+
+      },error=>console.log("ERROR UPLOAD VIDEO"))
+    })
   }
 
 }

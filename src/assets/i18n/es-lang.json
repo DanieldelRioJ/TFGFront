@@ -81,6 +81,11 @@
         "min":"Mínima(pixels/frame)",
         "max":"Máxima(pixels/frame)",
         "time":"Tiempo(s)"
+      },
+      "social-distance":{
+        "title":"Distancia social",
+        "description":"Define la distancia social",
+        "distance":"Distancia"
       }
     }
   },
