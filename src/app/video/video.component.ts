@@ -20,6 +20,7 @@ export class VideoComponent implements AfterViewInit {
     pauseIcon=faPause;
 
     boundingBoxesActivated:boolean=true;
+    socialDistanceActivated:boolean=true;
 
     environment=environment;
 
@@ -42,7 +43,6 @@ export class VideoComponent implements AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    console.log(this.seekElement)
     this.renderer.listen(this.videoElement.nativeElement,'canplay',_=>{
       this.renderer.setAttribute(this.canvas.nativeElement,'width',this.videoElement.nativeElement.videoWidth)
       this.renderer.setAttribute(this.canvas.nativeElement,'height',this.videoElement.nativeElement.videoHeight)
@@ -51,13 +51,11 @@ export class VideoComponent implements AfterViewInit {
       this.canvasContext.lineTo(500,500)
 
     })
-
     this.renderer.listen(this.videoElement.nativeElement,'ended',_=>this.playingVideo=false)
     this.route.paramMap.subscribe(params => {
       let video_id = params.get("video_id");
       this.videoService.getVideo(video_id).subscribe(video=>{
           this.video=video;
-          console.log(video)
           this.videoService.getFrameMap(video.id).subscribe(frameMap=>{
             this.frameMap=frameMap;
             this.updateBirdEyeView();
@@ -107,7 +105,6 @@ export class VideoComponent implements AfterViewInit {
                 apB.collision=[]
               }
               apA.collision.push(j);
-              console.log(this.actualFrame)
             }
           }
         }
@@ -117,12 +114,18 @@ export class VideoComponent implements AfterViewInit {
         this.canvasContext.clearRect(0,0,this.video.width,this.video.height)
         let lineWidth=this.video.width*4/1000
         let fontSize=Math.round(this.video.width*25/1000)
+        this.canvasContext.lineWidth=lineWidth
+        this.canvasContext.strokeStyle='red'
+        this.canvasContext.textAlign="center"
+        this.canvasContext.shadowColor="black"
+        this.canvasContext.shadowBlur = 4;
+        this.canvasContext.fillStyle='white'
+        this.canvasContext.font=fontSize+"px Arial"
 
         this.actualAppearances.forEach((appearance:any)=>{
           if(appearance.collision!=undefined){
             appearance.collision.forEach(index_collision=>{
-              this.canvasContext.lineWidth=lineWidth
-              this.canvasContext.strokeStyle='red'
+
               this.canvasContext.beginPath();
               this.canvasContext.moveTo(appearance.center_col,appearance.center_row)
 
@@ -131,15 +134,27 @@ export class VideoComponent implements AfterViewInit {
               this.canvasContext.stroke();
               this.canvasContext.closePath();
 
-              this.canvasContext.textAlign="center"
-              this.canvasContext.shadowColor="black"
-              this.canvasContext.fillStyle='white'
-              this.canvasContext.font=fontSize+"px Arial"
-              this.canvasContext.shadowBlur = 4;
+
+
+
               this.canvasContext.fillText(""+(this.distance(appearance.real_coordinates[0],appearance.real_coordinates[1],collisionElement.real_coordinates[0],collisionElement.real_coordinates[1])/this.video.perspective.one_meter-0.7).toFixed(2)
               ,(appearance.center_col+collisionElement.center_col)/2,(appearance.center_row+collisionElement.center_row)/2)
             })
           }
+        })
+
+        //Draw references
+        this.canvasContext.strokeStyle='orange'
+        if(this.video==undefined || this.video.perspective==undefined || this.video.perspective.references==undefined)
+          return;
+        this.video.perspective.references.forEach((coordinates,index)=>{
+          this.canvasContext.beginPath();
+          this.canvasContext.moveTo(coordinates[0].x,coordinates[0].y)
+          for(let index=1;index<coordinates.length;index++){
+            this.canvasContext.lineTo(coordinates[index].x,coordinates[index].y)
+          }
+
+          this.canvasContext.stroke();
         })
       }
     }

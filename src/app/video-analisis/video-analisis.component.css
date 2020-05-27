@@ -30,6 +30,12 @@ mat-expansion-panel{
   margin-right: 5px;
 }
 
+.checkbox-group input:disabled + label,.table-cell input:disabled + label{
+  background-color: rgb(100,100,100);
+  color:grey;
+  cursor: default;
+}
+
 .checkbox-group input:checked + label,.table-cell input:checked + label{
   background-color: red;
   color:white;

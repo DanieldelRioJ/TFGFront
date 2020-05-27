@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
   <nav aria-label="breadcrumb">
     <mat-card>
       <button mat-button color="accent" routerLink="/">{{'breadcrumbs.home' | translate}}</button> /
@@ -18,11 +18,21 @@
             <button mat-raised-button color="warn" class="btn-block" (click)="removePerspectivePoints()">
               {{'settings.remove-perspective-points' | translate}}
             </button>
+            <button mat-raised-button color="warn" class="btn-block" (click)="removeReferencePoints()">
+              {{'settings.remove-reference-points' | translate}}
+            </button>
+            <p class="mt-2 mb-0">{{'settings.hint' | translate}}</p>
+            <mat-form-field class="w-100" appearance="standard" color="accent" matTooltip="{{'settings.ratio-tooltip' | translate}}">
+              <mat-label>{{'settings.ratio' | translate}}</mat-label>
+              <input matInput placeholder="Campus sur" id="title-input" type="number" step="0.1" [(ngModel)]="ratio">
+            </mat-form-field>
+
           </div>
-          <div *ngIf="!coordinates" class="alert alert-danger" role="alert" matTooltip="Para activar la vista de pájaro, se deben de seleccionar en la imagen 4 puntos de referencia en el suelo que en la realidad forman un rectángulo.">
+          <div *ngIf="!coordinates" class="alert alert-danger" role="alert" matTooltip="{{'settings.alert-tooltip' | translate}}">
             <p class="m-0">{{'settings.top-view-disabled' | translate}}</p>
             <p class="m-0 text-muted">{{'settings.select-4-points' | translate}}</p>
           </div>
+          <mat-divider></mat-divider>
           <div *ngIf="video">
             <mat-form-field class="w-100" appearance="standard" color="accent">
               <mat-label>{{'objects.video.title' | translate}}</mat-label>

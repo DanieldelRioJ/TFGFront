@@ -27,7 +27,12 @@
       "label":"Orden",
       "downward":"Descendente",
       "upward":"Ascendente"
-    }
+    },
+    "sidebar":{
+      "videos":"Vídeos",
+      "upload-video":"Subir vídeo"
+    },
+    "uploading":"Subindo"
   },
 
   "video":{
@@ -38,7 +43,16 @@
     "watch-objects-button":"Ver obxetos",
     "download-button":"Descargar",
     "distance":"Distancia",
-    "information":"Información"
+    "information":"Información",
+    "top-view":{
+      "title":"Vista aérea",
+      "error-message-1":"Para activar a vista aérea",
+      "error-message-2":"Axustes>4 puntos de referencia"
+    },
+    "checkboxes":{
+      "bounding":"Activar bounding boxes",
+      "social-distance":"Activar detector de distancia social"
+    }
   },
   "filter":{
     "generation-form":{
@@ -64,7 +78,7 @@
         "create-area-button":"Definir área",
         "accept-area-button":"Aceptar área",
         "delete-area-button":"Eliminar área",
-        "direction-tooltio":"Elixe a dirección desexada (se non seleccionas ningunha, son todas válidas)",
+        "direction-tooltip":"Elixe a dirección desexada (se non seleccionas ningunha, son todas válidas)",
         "erratic-button":"Errático",
         "speed":{
           "title":"Velocidade",
@@ -81,13 +95,28 @@
         "min":"Mínima(pixels/frame)",
         "max":"Máxima(pixels/frame)",
         "time":"Tempo(s)"
-      }
+      },
+      "social-distance":{
+        "title":"Distancia social",
+        "description":"Defina la distancia social",
+        "distance":"Distancia"
+      },
+      "perspective-message":"Defina a perspectiva do vídeo para activar esta funcionalidade",
+      "no-objects":"Non hai obxetos que cumplan as condicions",
+      "fullscreen":"Pantalla completa",
+      "object-number":"Número de obxetos",
+      "show-bounding":"Mostrar bounding boxes"
     }
   },
   "settings":{
-    "remove-perspective-points":"Eliminar os puntos de perspectiva",
-    "top-view-disabled":"Top View desactivada",
-    "select-4-points":"Selecciona 4 puntos"
+    "remove-perspective-points":"Borrar puntos de perspectiva",
+    "remove-reference-points":"Borrar puntos de referencia",
+    "hint":"Podes dibuxar lineas de referencia na imaxe da esquerda",
+    "top-view-disabled":"Vista aérea desactivada",
+    "select-4-points":"Selecciona 4 puntos",
+    "ratio":"Ratio (opcional)",
+    "ratio-tooltip":"Ratio (relación entre a distancia de 0-1 e de 1-2 tal que: 01/12)",
+    "alert-tooltip":"Para activar a vista aérea, débense seleccionar na imaxe 4 puntos de referencia no chan, que na realidade forman un rectángulo."
   },
 
   "objects":{

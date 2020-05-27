@@ -13,7 +13,6 @@
           <p class="lang-option">{{selectedLang | uppercase}}</p>
         </mat-select-trigger>
         <mat-option value="gl" selected>
-          <!--<img class="image-flag" src="/assets/lang/gl.svg" alt="">-->
           <p class="lang-option">GL</p>
         </mat-option>
         <mat-option value="es">
@@ -28,11 +27,14 @@
 
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" class=" p-2">
-      <button mat-raised-button color="accent" class="w-100" (click)="onUploadClick()">Subir vídeo</button>
-      <div mat-subheader>Vídeos</div>
+      <button mat-raised-button color="accent" class="w-100" (click)="onUploadClick()">{{'main.sidebar.upload-video' | translate}}</button>
+      <div mat-subheader>{{'main.sidebar.videos' | translate}}</div>
       <div *ngFor="let video of videos" class="p-2 clickable miniature" routerLink="/videos/{{video.id}}" routerLinkActive="active">
         <div>
-          <img matListAvatar src="{{environment.apiUrl}}/videos/{{video?.id}}/background">
+          <div *ngIf="!video.processed" class="img-loading">
+            <mat-spinner style="margin:auto"></mat-spinner>
+          </div>
+          <img *ngIf="video.processed" matListAvatar src="{{environment.apiUrl}}/videos/{{video?.id}}/background">
           <p *ngIf="video.title" class="overlay-miniature mb-0 p-1">{{video.title}}</p>
         </div>
       </div>
@@ -44,7 +46,7 @@
 
   </mat-sidenav-container>
   <mat-card *ngIf="uploading" class="upload-progress-div">
-    <p>Uploading... {{uploadPercentage}}%</p>
+    <p>{{'main.uploading' | translate}}... {{uploadPercentage}}%</p>
     <mat-progress-bar mode="determinate" [value]="uploadPercentage"></mat-progress-bar>
   </mat-card>
   <notifier-container style="height:0px;"></notifier-container>

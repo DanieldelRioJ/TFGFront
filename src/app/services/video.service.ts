@@ -61,7 +61,8 @@ export class VideoService {
     return this.http.get(`${environment.apiUrl}/videos/${video_id}/virtual/${virtual_id}/${part}`);
   }
 
-  setPerspectivePoints(video_id,points){
-    return this.http.post(`${environment.apiUrl}/videos/${video_id}/perspective`,points);
+  setPerspectivePoints(video_id,points,references,ratio){
+    let body={ratio:ratio,references:references,points:points}
+    return this.http.post(`${environment.apiUrl}/videos/${video_id}/perspective`,body);
   }
 }

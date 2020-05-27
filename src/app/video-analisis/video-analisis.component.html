@@ -49,11 +49,11 @@
               </mat-expansion-panel-header>
               <hr>
               <mat-form-field color="accent" class="w-100">
-                <mat-label>{{'filter.generation-form.social-distance.distance'| translate}} (m)</mat-label>
+                <mat-label>{{'filter.generation-form.time.from'| translate}}</mat-label>
                 <input matInput type="time" autocomplete="off" formControlName="distance" placeholder="00:00:00" min="00:00:00" step="1" formControlName="start">
               </mat-form-field>
               <mat-form-field color="accent" class="w-100">
-                <mat-label>{{'filter.generation-form.social-distance.distance'| translate}} (m)</mat-label>
+                <mat-label>{{'filter.generation-form.time.to'| translate}}</mat-label>
                 <input matInput type="time" autocomplete="off" formControlName="distance" placeholder="00:00:00" min="00:00:00" step="1" formControlName="end">
               </mat-form-field>
             </mat-expansion-panel>
@@ -149,14 +149,18 @@
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  <fa-icon class=" mr-2" [icon]="speedIcon"></fa-icon>
-                  <b>{{'filter.generation-form.speed.title'| translate}}</b>
+                  <fa-icon class=" mr-2" [icon]="speedIcon" [ngStyle]="{'color':video?.perspective?'white':'grey'}"></fa-icon>
+                  <b [ngStyle]="{'color':video?.perspective?'white':'grey'}">{{'filter.generation-form.speed.title'| translate}}</b>
                 </mat-panel-title>
                 <mat-panel-description>
-                  {{'filter.generation-form.speed.description'| translate}}
+                  <span [ngStyle]="{'color':video?.perspective?'white':'grey'}">{{'filter.generation-form.speed.description'| translate}}</span>
+
                 </mat-panel-description>
               </mat-expansion-panel-header>
               <hr>
+              <div *ngIf="!video?.perspective" class="alert alert-info" role="alert">
+                {{'filter.generation-form.perspective-message'| translate}}
+              </div>
               <div class="checkbox-group speed-checkboxes" formGroupName="speed">
                 <div>
                   <input id="very-slow" type="checkbox" formControlName="very_slow">
@@ -193,17 +197,20 @@
             <mat-expansion-panel formGroupName="social_distance">
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                  <fa-icon class=" mr-2" [icon]="socialDistanceIcon"></fa-icon>
-                  <b>{{'filter.generation-form.social-distance.title'| translate}}</b>
+                  <fa-icon class=" mr-2" [icon]="socialDistanceIcon" [ngStyle]="{'color':video?.perspective?'white':'grey'}"></fa-icon>
+                  <b [ngStyle]="{'color':video?.perspective?'white':'grey'}">{{'filter.generation-form.social-distance.title'| translate}}</b>
                 </mat-panel-title>
                 <mat-panel-description>
-                  {{'filter.generation-form.social-distance.description'| translate}}
+                  <span [ngStyle]="{'color':video?.perspective?'white':'grey'}">{{'filter.generation-form.social-distance.description'| translate}}</span>
                 </mat-panel-description>
               </mat-expansion-panel-header>
               <hr>
+              <div *ngIf="!video?.perspective" class="alert alert-info" role="alert">
+                {{'filter.generation-form.perspective-message'| translate}}
+              </div>
               <mat-form-field color="accent" class="w-100">
                 <mat-label>{{'filter.generation-form.social-distance.distance'| translate}} (m)</mat-label>
-                <input matInput type="number" autocomplete="off" step="1" min="1" formControlName="distance">
+                <input matInput type="number" autocomplete="off" step="1" min="1" formControlName="distance" [attr.disabled]="'true'">
               </mat-form-field>
 
             </mat-expansion-panel>

@@ -1,22 +1,25 @@
 <div #videoContainer style="position:relative" class="videoContainer">
   <div class="overlay-video-0obj" *ngIf="virtualVideo?.objects_quantity==0">
-    <p>No hay objetos que cumplan las condiciones</p>
+    <p>{{'filter.generation-form.no-objects'| translate}}</p>
   </div>
   <div class="overlay-video-0obj" *ngIf="loading">
-    <mat-progress-spinner class="example-margin" mode="determinate" [value]="generationProgress">
-    </mat-progress-spinner>
-    <p>{{generationProgress}}%</p>
+    <div>
+      <mat-progress-spinner mode="determinate" [value]="generationProgress" class="spinner">
+      </mat-progress-spinner>
+      <p>{{generationProgress}}%</p>
+    </div>
+
   </div>
   <video (resized)="onVideoResize" style="display:inline-block" #videoDisplayer class="video-displayer" controls></video>
   <a *ngFor="let boundingBox of virtualFrameAppearances?.appearance_list" [hidden]="!boundingBoxActivated"
     [ngStyle]="{height:boundingBox.relative_height+'px',width:boundingBox.relative_width+'px',left:boundingBox.relative_col+'px',top:boundingBox.relative_row+'px'}" class="bounding-box" routerLink="/videos/{{video.id}}/objects/{{boundingBox.object}}"
     target="_blank"></a>
 </div>
-<button (click)="onFullScreen($event)">FullScreen</button>
+<button (click)="onFullScreen($event)">{{'filter.generation-form.fullscreen'| translate}}</button>
 <br>
 <div class="custom-control custom-checkbox">
   <input type="checkbox" class="custom-control-input" id="boundingBoxCheckbox" [(ngModel)]="boundingBoxActivated">
-  <label class="custom-control-label" for="boundingBoxCheckbox">Mostrar bounding boxes</label>
+  <label class="custom-control-label" for="boundingBoxCheckbox">{{'filter.generation-form.show-bounding'| translate}}</label>
 </div>
-<p>Object number: {{virtualVideo?.objects_quantity}}</p>
+<p>{{'filter.generation-form.object-number'| translate}}: {{virtualVideo?.objects_quantity}}</p>
 <img class="heatmap" *ngIf="virtualVideo" src="{{environment.apiUrl}}/videos/{{video?.id}}/virtual/{{virtualVideo?.id}}/heatmap" alt="">

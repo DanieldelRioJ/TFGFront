@@ -9,6 +9,11 @@
   margin-bottom: 20px;
 }
 
+.img-loading{
+  width: 100%;
+  background-color: grey;
+}
+
 .mat-drawer-inner-container{
   overflow-x: hidden;
 }

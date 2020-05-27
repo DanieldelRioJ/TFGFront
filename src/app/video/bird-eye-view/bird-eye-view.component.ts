@@ -59,6 +59,9 @@ export class BirdEyeViewComponent implements OnInit,AfterContentInit {
     return this._appearances;
   }
 
+
+  @Input() references:any[];
+
   originalWidth=0;
   originalHeight=0;
 
@@ -111,6 +114,20 @@ export class BirdEyeViewComponent implements OnInit,AfterContentInit {
     this.appearances.forEach((appearance:any)=>{
       //real cordinates adapted to fit on div keeping scale
         appearance.real_coordinates_adapted=[(appearance.real_coordinates[0]-this.offsetX)*this.scale-4,(appearance.real_coordinates[1]-this.offsetY)*this.scale-4]//-4, half of .object size
+    })
+
+    //Draw references
+    this.canvasContext.strokeStyle='orange'
+    if(this.references==undefined)
+      return;
+    this.references.forEach((coordinates,index)=>{
+      this.canvasContext.beginPath();
+      this.canvasContext.moveTo((coordinates[0].x-this.offsetX),(coordinates[0].y-this.offsetY))
+      for(let index=1;index<coordinates.length;index++){
+        this.canvasContext.lineTo((coordinates[index].x-this.offsetX),(coordinates[index].y-this.offsetY))
+      }
+
+      this.canvasContext.stroke();
     })
   }
 

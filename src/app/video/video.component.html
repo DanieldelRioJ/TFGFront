@@ -16,16 +16,18 @@
             <p class="m-0">{{actualFrame*1000/video?.fps_adapted | date:'mm:ss':'UTC' }}/{{video?.frame_quantity_adapted*1000/video?.fps_adapted | date:'mm:ss':'UTC'}}</p>
           </div>
         </div>
-        <canvas #canvas class="canvas w-100 h-100" [hidden]="!boundingBoxesActivated"></canvas>
+        <canvas #canvas class="canvas w-100 h-100" [hidden]="!boundingBoxesActivated || !socialDistanceActivated"></canvas>
         <div *ngIf="boundingBoxesActivated" class="w-100 h-100">
           <a *ngFor="let boundingBox of actualAppearances" [hidden]="false"
-            [ngStyle]="{borderColor:boundingBox.collision?'red':'green',height:boundingBox.relative_height+'px',width:boundingBox.relative_width+'px',left:boundingBox.relative_col+'px',top:boundingBox.relative_row+'px'}" class="bounding-box"
-            routerLink="/videos/{{video.id}}/objects/{{boundingBox.object}}" target="_blank"></a>
+            [ngStyle]="{borderColor:boundingBox.collision && socialDistanceActivated?'red':'green',height:boundingBox.relative_height+'px',width:boundingBox.relative_width+'px',left:boundingBox.relative_col+'px',top:boundingBox.relative_row+'px'}"
+            class="bounding-box" routerLink="/videos/{{video.id}}/objects/{{boundingBox.object}}" target="_blank"></a>
         </div>
 
       </div>
       <div>
-        <mat-checkbox [(ngModel)]="boundingBoxesActivated">Desactivate bounding boxes</mat-checkbox>
+        <mat-checkbox [(ngModel)]="boundingBoxesActivated">{{'video.checkboxes.bounding' | translate}}</mat-checkbox>
+        <br>
+        <mat-checkbox [(ngModel)]="socialDistanceActivated">{{'video.checkboxes.social-distance' | translate}}</mat-checkbox>
       </div>
 
       <button mat-raised-button color="primary" class="mr-2" routerLink="/videos/{{video?.id}}/filter">
@@ -45,33 +47,34 @@
       </button>
     </article>
     <article class="info col-12 col-lg-5">
-      <h4>Top View</h4>
+      <h4>{{'video.top-view.title' | translate}}</h4>
       <mat-form-field color="accent">
         <mat-label>{{'video.distance' | translate}}:</mat-label>
         <input type="number" min="1" step="1" matInput [(ngModel)]="meters" required>
       </mat-form-field>
       <ng-container *ngIf="video?.perspective">
-        <app-bird-eye-view [video]="video" [appearances]="actualAppearances"></app-bird-eye-view>
+        <app-bird-eye-view [hidden]="!socialDistanceActivated" [video]=" video" [appearances]="actualAppearances" [references]="video.perspective.converted_references">
+        </app-bird-eye-view>
 
 
       </ng-container>
       <div *ngIf="!video?.perspective" class="alert alert-danger" role="alert">
-        Para activar vista de pájaro: <b>Ajustes>4 puntos de referencia</b>
+        {{'video.top-view.error-message-1' | translate}}: <b>{{'video.top-view.error-message-2' | translate}}</b>
       </div>
     </article>
   </section>
   <hr>
   <article class=row>
 
-    <div class=" col-12">
+    <div class=" col-12" *ngIf="video">
       <h4>{{'video.information' | translate}}</h4>
       <p><b>{{'objects.video.title' | translate}}:</b> {{video?.title}}</p>
       <p><b>{{'objects.video.city' | translate}}:</b> {{video?.city}}</p>
       <p><b>{{'objects.video.description' | translate}}:</b></p>
       <p>{{video?.description}}</p>
       <hr>
-      <p><b>{{'objects.video.recorded-date' | translate}}:</b> {{video?.recorded_date | date: 'dd/MM/yyyy hh:mm'}}</p>
-      <p><b>{{'objects.video.upload-date' | translate}}:</b> {{video?.upload_date | date: 'dd/MM/yyyy hh:mm'}}</p>
+      <p><b>{{'objects.video.recorded-date' | translate}}:</b> {{ (video.recorded_date != 'null') ? (video.recorded_date | date: 'dd/MM/yyyy') : "" }}</p>
+      <p><b>{{'objects.video.upload-date' | translate}}:</b> {{ (video.upload_date != 'null') ? (video.upload_date | date: 'dd/MM/yyyy') : "" }}</p>
       <hr>
       <p><b>{{'objects.video.fps' | translate}}:</b> {{video?.fps}}</p>
       <p><b>{{'objects.video.n-frames' | translate}}:</b> {{video?.frame_quantity}}</p>

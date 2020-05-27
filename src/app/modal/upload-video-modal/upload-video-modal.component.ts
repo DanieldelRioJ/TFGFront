@@ -28,7 +28,6 @@ export class UploadVideoModalComponent implements OnInit {
   }
 
   okClick(){
-    debugger;
     this.dialogRef.close(this.uploadForm.value)
   }
 

@@ -14,9 +14,15 @@ export class VideoProgressService {
     }*/
 
   virtualSocket;
+  videoSocket;
 
   constructor() {
     this.virtualSocket=io.connect("http://localhost:5000"+"/virtual")
+    this.virtualSocket.on('connect', function() {
+        console.log('Websocket connected!');
+    });
+
+    this.virtualSocket=io.connect("http://localhost:5000"+"/video")
     this.virtualSocket.on('connect', function() {
         console.log('Websocket connected!');
     });
@@ -29,6 +35,15 @@ export class VideoProgressService {
 
   stopListeningToVirtualVideoProgress(){
     this.virtualSocket.off("progress")
+  }
+
+  listenToVideoProgress(video_id,func){
+    this.videoSocket.on("progress",func)
+    this.videoSocket.emit("subscribe",video_id)
+  }
+
+  stopListeningToVideoProgress(){
+    this.videoSocket.off("progress")
   }
 
 }

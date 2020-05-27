@@ -13,8 +13,10 @@ import { NotifierService } from 'angular-notifier';
 export class SettingsComponent implements OnInit {
   video: Video;
   coordinates:[];
+  ratio:number;
 
   resetPerspective:Subject<any> = new Subject();
+  references: any;
 
   constructor(private route:ActivatedRoute,
     private videoService:VideoService,
@@ -26,24 +28,31 @@ export class SettingsComponent implements OnInit {
       this.videoService.getVideo(video_id).subscribe(video=>{
           this.video=video;
           this.coordinates=this.video.perspective!=undefined?this.video.perspective.original_points:undefined;
+          this.references=this.video.perspective?.references!=undefined?this.video.perspective.references:[];
+          //this.references=this.video.perspective!=undefined?this.video.perspective.references:undefined;
       })
     })
   }
 
   removePerspectivePoints(){
     this.coordinates=undefined;
-    this.resetPerspective.next();
+    this.resetPerspective.next('coordinates');
+  }
+
+  removeReferencePoints(){
+    this.references=[]
+    this.resetPerspective.next('references');
   }
 
   newPerspective(coordinates){
-    this.coordinates=coordinates;
+    this.coordinates=coordinates.coordinates;
+    this.references=coordinates.references
   }
 
   update(){
     let subscriber=this.videoService.updateVideo(this.video.id,this.video).subscribe(_=>subscriber.unsubscribe())
-    if(this.coordinates!=undefined){
-      this.videoService.setPerspectivePoints(this.video.id,this.coordinates).subscribe();
-    }
+
+      this.videoService.setPerspectivePoints(this.video.id,this.coordinates,this.references,this.ratio).subscribe();
     this.notifierService.notify("success","Vídeo actualizado")
   }
 

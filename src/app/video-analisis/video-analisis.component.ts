@@ -98,6 +98,10 @@ export class VideoAnalisisComponent implements OnInit,AfterViewInit{
         let video_id = params.get("video_id");
         this.videoService.getVideo(video_id).subscribe(video=>{
             this.video=video;
+            if(this.video.perspective!=undefined){
+              this.filterForm.controls.speed.enable()
+              this.filterForm.controls.social_distance.enable()
+            }
         })
       })
       this.filterForm = this.fb.group({
@@ -128,10 +132,11 @@ export class VideoAnalisisComponent implements OnInit,AfterViewInit{
             lower_color:undefined
           }),
           social_distance:this.fb.group({
-            distance:undefined
+            distance:[{value:undefined,disabled:true}]
           })
 
   });
+  this.filterForm.controls.speed.disable()
   }
 
   setPath(path){

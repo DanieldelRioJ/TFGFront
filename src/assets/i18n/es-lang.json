@@ -27,7 +27,12 @@
       "label":"Orden",
       "downward":"Descendente",
       "upward":"Ascendente"
-    }
+    },
+    "sidebar":{
+      "videos":"Vídeos",
+      "upload-video":"Subir vídeo"
+    },
+    "uploading":"Subiendo"
   },
 
   "video":{
@@ -38,7 +43,16 @@
     "watch-objects-button":"Ver objetos",
     "download-button":"Descargar",
     "distance":"Distancia",
-    "information":"Información"
+    "information":"Información",
+    "top-view":{
+      "title":"Vista aérea",
+      "error-message-1":"Para activar la vista aérea",
+      "error-message-2":"Ajustes>4 puntos de referencia"
+    },
+    "checkboxes":{
+      "bounding":"Activar bounding boxes",
+      "social-distance":"Activar detector de distancia social"
+    }
   },
   "filter":{
     "generation-form":{
@@ -86,13 +100,23 @@
         "title":"Distancia social",
         "description":"Define la distancia social",
         "distance":"Distancia"
-      }
+      },
+      "perspective-message":"Defina la perspectiva del vídeo para activar esta funcionalidad",
+      "no-objects":"No hay objetos que cumplan las condiciones",
+      "fullscreen":"Pantalla completa",
+      "object-number":"Número de objetos",
+      "show-bounding":"Mostrar bounding boxes"
     }
   },
   "settings":{
-    "remove-perspective-points":"Eliminar los puntos de perspectiva",
-    "top-view-disabled":"Top View desactivada",
-    "select-4-points":"Selecciona 4 puntos"
+    "remove-perspective-points":"Borrar puntos de perspectiva",
+    "remove-reference-points":"Borrar puntos de referencia",
+    "hint":"Puedes dibujar lineas de referencia en la imagen de la izquierda",
+    "top-view-disabled":"Vista aérea desactivada",
+    "select-4-points":"Selecciona 4 puntos",
+    "ratio":"Ratio (opcional)",
+    "ratio-tooltip":"Ratio (relación entre la distancia de 0-1 y de 1-2 tal que: 01/12)",
+    "alert-tooltip":"Para activar la vista aérea, se deben de seleccionar en la imagen 4 puntos de referencia en el suelo, que en la realidad forman un rectángulo."
   },
 
 

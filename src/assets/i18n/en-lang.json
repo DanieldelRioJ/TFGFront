@@ -27,7 +27,12 @@
       "label":"Order",
       "downward":"Downward",
       "upward":"Upward"
-    }
+    },
+    "sidebar":{
+      "videos":"Videos",
+      "upload-video":"Upload video"
+    },
+    "uploading":"Uploading"
   },
 
   "video":{
@@ -38,7 +43,16 @@
     "watch-objects-button":"See objects",
     "download-button":"Download",
     "distance":"Distance",
-    "information":"Information"
+    "information":"Information",
+    "top-view":{
+      "title":"Top View",
+      "error-message-1":"To activate Top View",
+      "error-message-2":"Settings>4 reference points"
+    },
+    "checkboxes":{
+      "bounding":"Enable bounding boxes",
+      "social-distance":"Enable social distance detector"
+    }
   },
   "filter":{
     "generation-form":{
@@ -64,7 +78,7 @@
         "create-area-button":"Define area",
         "accept-area-button":"Accept area",
         "delete-area-button":"Delete area",
-        "direction-tooltio":"Choose desired direction (if none, all are valid)",
+        "direction-tooltip":"Choose desired direction (if none, they are all valid, included erratic)",
         "erratic-button":"Erratic",
         "speed":{
           "title":"Speed",
@@ -81,13 +95,28 @@
         "min":"Minimum(pixels/frame)",
         "max":"Maximum(pixels/frame)",
         "time":"Time(s)"
-      }
+      },
+      "social-distance":{
+        "title":"Social distance",
+        "description":"Define social distance",
+        "distance":"Distance"
+      },
+      "perspective-message":"Define perspective in order to activate this funcionality",
+      "no-objects":"There are no objects that meet the requirements",
+      "fullscreen":"Fullscreen",
+      "object-number":"Object number",
+      "show-bounding":"Show bounding boxes"
     }
   },
   "settings":{
     "remove-perspective-points":"Remove perspective points",
+    "remove-reference-points":"Remove reference points",
+    "hint":"Reference lines can be drawn on the left image",
     "top-view-disabled":"Top View disabled",
-    "select-4-points":"Select 4 points"
+    "select-4-points":"Select 4 points",
+    "ratio":"Ratio (optional)",
+    "ratio-tooltip":"Ratio (relation between 0-1 and 1-2 distances: 01/12)",
+    "alert-tooltip":"To activate top view, you need to draw a 4 points in the ground that in the reality are a rectangle."
   },
 
   "objects":{

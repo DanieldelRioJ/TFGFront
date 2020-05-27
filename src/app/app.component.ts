@@ -86,6 +86,7 @@ export class AppComponent implements OnInit{
           this.uploading=true;
           this.uploadPercentage=Math.round((event.loaded/event.total)*100)
         }else if(event.type===HttpEventType.Response){
+          this.videos.push(event.body)
           this.uploading=false
         }
 
