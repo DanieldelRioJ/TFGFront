@@ -1,17 +1,17 @@
-<h1 mat-dialog-title>Upload video</h1>
+<h1 mat-dialog-title>{{'modal.upload.head' | translate}}</h1>
 <form [formGroup]="uploadForm" (ngSubmit)="okClick()">
   <mat-dialog-content>
     <mat-form-field appearance="fill" color="accent" class="w-100">
-      <mat-label>Selecciona un vídeo</mat-label>
+      <mat-label>{{'modal.upload.select-video.label' | translate}}</mat-label>
       <ngx-mat-file-input accept="video/*" required formControlName="video"></ngx-mat-file-input>
-      <mat-hint>Selecciona un vídeo para subir a la plataforma</mat-hint>
-      <mat-error *ngIf="uploadForm.get('video').hasError('required')">Es obligatorio incluir un vídeo</mat-error>
+      <mat-hint>{{'modal.upload.select-video.hint' | translate}}</mat-hint>
+      <mat-error *ngIf="uploadForm.get('video').hasError('required')">{{'modal.upload.select-video.warn' | translate}}</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" color="accent" class="w-100">
-      <mat-label>Selecciona el fichero de anotaciones</mat-label>
+      <mat-label>{{'modal.upload.select-gt.label' | translate}}</mat-label>
       <ngx-mat-file-input accept=".txt" required formControlName="annotations"></ngx-mat-file-input>
-      <mat-hint>Selecciona el fichero de anotaciones correspondiente</mat-hint>
-      <mat-error *ngIf="uploadForm.get('annotations').hasError('required')">Es obligatorio incluir un fichero de anotaciones</mat-error>
+      <mat-hint>{{'modal.upload.select-gt.hint' | translate}}</mat-hint>
+      <mat-error *ngIf="uploadForm.get('annotations').hasError('required')">{{'modal.upload.select-gt.warn' | translate}}</mat-error>
     </mat-form-field>
 
     <mat-divider class="mt-3 mb-3"></mat-divider>
@@ -19,27 +19,27 @@
 
 
     <mat-form-field appearance="fill" color="accent" class="w-100">
-      <mat-label>Título</mat-label>
-      <input matInput type="text" placeholder="Día del atraco Santiago" formControlName="title">
-      <mat-error *ngIf="uploadForm.get('title').hasError('required')">Es obligatorio incluir un vídeo</mat-error>
+      <mat-label>{{'objects.video.title' | translate}}</mat-label>
+      <input matInput type="text" placeholder="{{'modal.upload.title.placeholder' | translate}}" formControlName="title">
+      <mat-error *ngIf="uploadForm.get('title').hasError('required')">{{'modal.upload.title.warn' | translate}}</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill" color="accent" class="w-100">
-      <mat-label>Ciudad</mat-label>
-      <input matInput type="text" placeholder="Santiago de Compostela" formControlName="city">
+      <mat-label>{{'objects.video.city' | translate}}</mat-label>
+      <input matInput type="text" placeholder="{{'modal.upload.city.placeholder' | translate}}" formControlName="city">
     </mat-form-field>
     <mat-form-field appearance="fill" color="accent" class="w-100" (click)="datepicker.open()">
-      <mat-label>Fecha de grabación</mat-label>
+      <mat-label>{{'objects.video.recorded-date' | translate}}</mat-label>
       <input matInput [matDatepicker]="datepicker" autocomplete="off" formControlName="recorded_date" [max]="maxDate">
       <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
       <mat-datepicker #datepicker></mat-datepicker>
     </mat-form-field>
     <mat-form-field appearance="fill" color="accent" class="w-100">
-      <mat-label>Descripción</mat-label>
+      <mat-label>{{'objects.video.description' | translate}}</mat-label>
       <textarea matInput formControlName="description"></textarea>
     </mat-form-field>
   </mat-dialog-content>
   <div mat-dialog-actions align="end">
-    <button mat-raised-button type="button" (click)="onNoClick()" color="warn" class="mr-2">Cancelar</button>
-    <button mat-raised-button color="accent" type="submit" [disabled]="!uploadForm.valid">Subir</button>
+    <button mat-raised-button type="button" (click)="onNoClick()" color="warn" class="mr-2">{{'modal.upload.cancel' | translate}}</button>
+    <button mat-raised-button color="accent" type="submit" [disabled]="!uploadForm.valid">{{'modal.upload.upload' | translate}}</button>
   </div>
 </form>

@@ -54,6 +54,30 @@
       "social-distance":"Activar detector de distancia social"
     }
   },
+  "modal":{
+    "upload":{
+      "head":"Subir vídeo",
+      "select-video":{
+        "hint":"Selecciona un video que quieras subir",
+        "warn":"Es obligatorio incluir un vídeo",
+        "label":"Selecciona un video"
+      },
+      "select-gt":{
+        "hint":"Selecciona el fichero de anotaciones correspondiente al video",
+        "warn":"Es obligatorio incluir el fichero de anotaciones",
+        "label":"Selecciona un fichero de anotaciones"
+      },
+      "title":{
+        "warn":"El título es obligatorio",
+        "placeholder":"Día de la manifestación de Hong Kong"
+      },
+      "city":{
+        "placeholder":"Hong Kong"
+      },
+      "cancel":"Cancelar",
+      "upload":"Subir"
+    }
+  },
   "filter":{
     "generation-form":{
       "title":"Parámetros de generación",
@@ -138,7 +162,8 @@
       "image":"Imagen",
       "appearance-range":"Rango de aparición",
       "average-speed":"Velocidad media",
-      "direction":"Dirección"
+      "direction":"Dirección",
+      "erratic":"Errático"
     }
   },
   "breadcrumbs":{

@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { VideoObject } from 'src/app/objects/video-object';
 import { environment } from 'src/environments/environment';
 import { faArrowRight} from '@fortawesome/free-solid-svg-icons';
+import { Video } from 'src/app/objects/video';
+import { VideoService } from 'src/app/services/video.service';
 
 @Component({
   selector: 'app-object-displayer',
@@ -15,12 +17,13 @@ export class ObjectDisplayerComponent implements OnInit {
   arrowIcon=faArrowRight;
   video_id:string;
   object_id:string;
-
+  video:Video;
   obj:VideoObject;
 
 
   constructor(private videoObjectService:VideoObjectService,
-    private route:ActivatedRoute) { }
+    private route:ActivatedRoute,
+  private videoService:VideoService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -32,6 +35,9 @@ export class ObjectDisplayerComponent implements OnInit {
         }
         this.obj=obj;
         console.log(obj)
+      })
+      this.videoService.getVideo(this.video_id).subscribe(video=>{
+        this.video=video;
       })
     })
   }

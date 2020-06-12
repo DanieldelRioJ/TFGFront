@@ -6,26 +6,23 @@ import { Socket } from 'ngx-socket-io';
   providedIn: 'root'
 })
 export class VideoProgressService {
-/*  constructor(private socket: Socket) { }
-
-    sendMessage(msg: string){
-      console.log(msg)
-        this.socket.emit("message", msg);
-    }*/
 
   virtualSocket;
   videoSocket;
 
   constructor() {
-    this.virtualSocket=io.connect("http://localhost:5000"+"/virtual")
-    this.virtualSocket.on('connect', function() {
-        console.log('Websocket connected!');
+
+    this.videoSocket=io.connect("http://192.168.8.102:5000")
+    this.videoSocket.on('connect', function() {
+        console.log('Websocket1 connected!');
     });
 
-    this.virtualSocket=io.connect("http://localhost:5000"+"/video")
+    this.virtualSocket=io.connect("http://192.168.8.102:5000"+"/virtual")
     this.virtualSocket.on('connect', function() {
-        console.log('Websocket connected!');
+        console.log('Websocket2 connected!');
     });
+
+
   }
 
   listenToVirtualVideoProgress(virtual_id,func){
@@ -37,9 +34,8 @@ export class VideoProgressService {
     this.virtualSocket.off("progress")
   }
 
-  listenToVideoProgress(video_id,func){
+  listenToVideoProgress(func){
     this.videoSocket.on("progress",func)
-    this.videoSocket.emit("subscribe",video_id)
   }
 
   stopListeningToVideoProgress(){

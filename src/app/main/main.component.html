@@ -61,7 +61,7 @@
 
 <div class="ml-2" style="display:inline-block">{{'main.order.label' | translate}}:
   <mat-form-field>
-    <mat-select color="accent" [value]="'0'" required (selectionChange)="videos.reverse()">
+    <mat-select color="accent" [value]="'0'" required (selectionChange)="reverse()">
       <mat-option value="0">
         {{'main.order.downward' | translate}}
       </mat-option>
@@ -73,12 +73,12 @@
 </div>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 mb-5 clickable p-0 p-sm-2" *ngFor="let video of videos">
+    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 mb-5 clickable p-0 p-sm-2" *ngFor="let video of videos$ | async">
       <mat-card style="height:100%" routerLink="/videos/{{video.id}}">
         <div mat-card-image>
           <div *ngIf="!video.processed">
-            <mat-spinner style="margin:auto">Processing</mat-spinner>
-            <p style="text-align:center">Processing</p>
+            <mat-spinner style="margin:auto" [mode]="video.progress==0?'indeterminate':'determinate'" [value]="video.progress"></mat-spinner>
+            <p *ngIf="!video.processed" style="text-align:center">{{video.progress}}%</p>
           </div>
 
           <img *ngIf="video.processed" class="w-100" src="{{environment.apiUrl}}/videos/{{video.id}}/background">

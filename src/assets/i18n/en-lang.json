@@ -54,6 +54,30 @@
       "social-distance":"Enable social distance detector"
     }
   },
+  "modal":{
+    "upload":{
+      "head":"Upload video",
+      "select-video":{
+        "hint":"Select the video that you want to add",
+        "warn":"Select a video is mandatory",
+        "label":"Select a video"
+      },
+      "select-gt":{
+        "hint":"Select the annotations file you want to add",
+        "warn":"Select a annotations file is mandatory",
+        "label":"Select a annotations file"
+      },
+      "title":{
+        "warn":"Include a title is mandatory",
+        "placeholder":"Hong Kong Riots Day"
+      },
+      "city":{
+        "placeholder":"Hong Kong"
+      },
+      "cancel":"Cancel",
+      "upload":"Upload"
+    }
+  },
   "filter":{
     "generation-form":{
       "title":"Generation parameters",
@@ -137,7 +161,8 @@
       "image":"Image",
       "appearance-range":"Appearance range",
       "average-speed":"Average speed",
-      "direction":"Direction"
+      "direction":"Direction",
+      "erratic":"Erratic"
     }
   },
   "breadcrumbs":{

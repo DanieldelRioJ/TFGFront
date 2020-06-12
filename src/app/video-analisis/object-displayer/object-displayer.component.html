@@ -11,10 +11,10 @@
       <mat-card class=" p-3">
         <img class="portrait" *ngIf="obj" src="{{environment.apiUrl}}/videos/{{video_id}}/objects/{{obj.id}}/{{obj.portrait}}" alt="">
         <hr>
-        <p>{{'objects.object.appearance-range' | translate}}: {{obj?.first_appearance}} - {{obj?.last_appearance}}</p>
+        <p>{{'objects.object.appearance-range' | translate}}: {{obj?.first_appearance*1000/video?.fps_adapted | date:'mm:ss':'UTC' }} - {{obj?.last_appearance*1000/video?.fps_adapted | date:'mm:ss':'UTC' }}</p>
         <p>{{'objects.object.average-speed' | translate}}: {{obj?.average_speed | number:'1.0-2'}} m/s</p>
         <p>{{'objects.object.direction' | translate}}:
-          <span *ngIf="!obj?.angle">Errático</span>
+          <span *ngIf="!obj?.angle">{{'objects.object.erratic' | translate}}</span>
           <fa-icon *ngIf="obj?.angle" style="font-size:20px;" transform="rotate-{{obj?.angle_degrees}}" [icon]="arrowIcon"></fa-icon>
         </p>
         <div>Upper colors: <div *ngFor="let color of obj?.upper_colors" class="color-box" [ngStyle]="{backgroundColor:'rgb('+color.value+')'}"></div>

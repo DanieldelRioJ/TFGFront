@@ -11,8 +11,8 @@ export class VideoService {
 
   constructor(private http:HttpClient) { }
 
-  getVideos():Observable<[Video]>{
-      return this.http.get<[Video]>(environment.apiUrl+"/videos");
+  getVideos():Observable<Video[]>{
+      return this.http.get<Video[]>(environment.apiUrl+"/videos");
   }
 
   removeVideos():Observable<any>{
@@ -63,6 +63,6 @@ export class VideoService {
 
   setPerspectivePoints(video_id,points,references,ratio){
     let body={ratio:ratio,references:references,points:points}
-    return this.http.post(`${environment.apiUrl}/videos/${video_id}/perspective`,body);
+    return this.http.post<Video>(`${environment.apiUrl}/videos/${video_id}/perspective`,body);
   }
 }

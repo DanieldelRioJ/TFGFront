@@ -26,12 +26,28 @@ export class SettingsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       let video_id = params.get("video_id");
       this.videoService.getVideo(video_id).subscribe(video=>{
+
+          console.log(video)
+          this.coordinates=video.perspective!=undefined?video.perspective.original_points:undefined;
+          this.references=video.perspective?.references!=undefined?video.perspective.references:[];
+          this.ratio=video.perspective?.ratio!=undefined?video.perspective.ratio:undefined;
+          if(this.coordinates!=undefined){
+            this.coordinates=this.convertCoordinatesFormat(this.coordinates)
+          }
           this.video=video;
-          this.coordinates=this.video.perspective!=undefined?this.video.perspective.original_points:undefined;
-          this.references=this.video.perspective?.references!=undefined?this.video.perspective.references:[];
-          //this.references=this.video.perspective!=undefined?this.video.perspective.references:undefined;
       })
     })
+  }
+
+  convertCoordinatesFormat(coordinates){
+    if (coordinates[0].x!=undefined)
+      return coordinates
+    let list=[]
+    for(let i=0;i<coordinates.length;i++){
+      list.push({x:coordinates[i][0],y:coordinates[i][1]})
+    }
+    return list
+
   }
 
   removePerspectivePoints(){
@@ -45,15 +61,26 @@ export class SettingsComponent implements OnInit {
   }
 
   newPerspective(coordinates){
+
     this.coordinates=coordinates.coordinates;
     this.references=coordinates.references
+    console.log(this.coordinates)
   }
 
   update(){
-    let subscriber=this.videoService.updateVideo(this.video.id,this.video).subscribe(_=>subscriber.unsubscribe())
+    //let subscriber=this.videoService.updateVideo(this.video.id,this.video).subscribe(_=>subscriber.unsubscribe())
 
-      this.videoService.setPerspectivePoints(this.video.id,this.coordinates,this.references,this.ratio).subscribe();
-    this.notifierService.notify("success","Vídeo actualizado")
+      this.videoService.setPerspectivePoints(this.video.id,this.coordinates,this.references,this.ratio).subscribe(
+        video=>{
+          this.notifierService.notify("success","Vídeo actualizado")
+          video.title=this.video.title
+          video.city=this.video.city
+          video.description=this.video.description
+          this.video=video
+          let subscriber=this.videoService.updateVideo(this.video.id,this.video).subscribe(_=>subscriber.unsubscribe())
+        },
+        error=>this.notifierService.notify("error","Vídeo actualizado"));
+
   }
 
 }

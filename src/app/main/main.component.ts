@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { VideoService } from '../services/video.service';
 import { Video } from '../objects/video';
+import { RootComponentService } from '../services/root-component.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
@@ -11,30 +14,55 @@ import { Video } from '../objects/video';
 export class MainComponent implements OnInit {
     panelOpenState = false;
     environment=environment
-    videos:[Video]
-    order=0;
+    videos:Video[];
+    videos$:Observable<Video[]>;
+    order:boolean=true;
+    orderedBy="city"
 
     maxDate=new Date();
 
-    constructor(private videoService:VideoService){
+    constructor(
+      private videoService:VideoService,
+      private rootComponentService:RootComponentService){
     }
 
   ngOnInit(): void {
-      this.videoService.getVideos().subscribe(videos=>{
+      /*this.videoService.getVideos().subscribe(videos=>{
           this.videos=videos;
           this.sortVideoBy('city');
-      });
+      });*/
+      this.videos$=this.rootComponentService.getVideos$();
+
+  }
+
+  reverse(){
+    this.order=!this.order;
+    this.sortVideoBy(this.orderedBy)
+    this.videos$.pipe(map((data)=>{
+      data.reverse();
+    })).subscribe();
   }
 
   sortVideoBy(attr):void{
-      this.videos.sort((a,b)=>{
+    this.videos$.pipe(map((data)=>{
+      data.sort((a,b)=>{
+          if (a[attr]>b[attr])
+            return 1;
+        else if (a[attr]==b[attr])
+            return 0;
+        return -1;
+      })
+      if(this.order) data.reverse();
+    })).subscribe();
+
+      /*this.videos.sort((a,b)=>{
           if (a[attr]>b[attr])
             return 1;
         else if (a[attr]==b[attr])
             return 0;
         return -1;
       });
-      if(this.order) this.videos.reverse();
+      if(this.order) this.videos.reverse();*/
   }
 
 }

@@ -13,4 +13,5 @@ export class Video {
     height:number;
     width:number;
     perspective;
+    progress:number=0;
 }

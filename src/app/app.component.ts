@@ -11,6 +11,8 @@ import { UploadVideoModalComponent } from './modal/upload-video-modal/upload-vid
 import { HttpEventType } from '@angular/common/http';
 
 import { VideoProgressService } from './services/video-progress.service';
+import { RootComponentService } from './services/root-component.service';
+import { Video } from './objects/video';
 
 
 
@@ -38,15 +40,21 @@ export class AppComponent implements OnInit{
        media: MediaMatcher,private renderer:Renderer2,
        private translate: TranslateService,
        private videoService:VideoService,
-       private videoProgress:VideoProgressService) {
+       private videoProgress:VideoProgressService,
+        private rootComponentService:RootComponentService,
+      private videoProgressService:VideoProgressService) {
 
 
 
       translate.setDefaultLang('es');
+      if(sessionStorage.getItem("lang")!=undefined){
+        this.selectLang(sessionStorage.getItem("lang"))
+      }else{
+        const browserLang = translate.getBrowserLang();
+        this.selectedLang=browserLang.match(/es|en|gl/) ? browserLang : 'en';
+        this.selectLang(this.selectedLang)
+      }
 
-      const browserLang = translate.getBrowserLang();
-      this.selectedLang=browserLang.match(/es|en|gl/) ? browserLang : 'en';
-      this.selectLang(this.selectedLang)
       this.mobileQuery = media.matchMedia('(max-width: 600px)');
       this._mobileQueryListener = () => changeDetectorRef.detectChanges();
       this.mobileQuery.addListener(this._mobileQueryListener);
@@ -60,10 +68,17 @@ export class AppComponent implements OnInit{
       this.translate.use(lang);
     }
 
+    selectLangByUser(lang){
+      sessionStorage.setItem("lang",lang);
+      this.selectLang(lang)
+    }
+
     ngOnInit() {
       let obseervable=this.videoService.getVideos().subscribe(videos=>{
         obseervable.unsubscribe();
         this.videos=videos;
+        this.rootComponentService.notifyChange(videos)
+        this.videoProgressService.listenToVideoProgress(this.updateVideoData.bind(this));
       })
     }
 
@@ -75,18 +90,46 @@ export class AppComponent implements OnInit{
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
+  updateVideoData(data){
+    let video:Video=JSON.parse(data.video);
+    video.progress=data.progress
+    let index=undefined;
+    for(let i=0;i<this.videos.length;i++){
+      if((this.videos[i].id && video.id==this.videos[i].id) ||
+      (video.title==this.videos[i].title && !this.videos[i].processed)){
+          if(this.videos[i].progress<video.progress){
+            index=i;
+          }
+          break;
+      }
+    }
+    if(index!=undefined){
+      this.videos[index]=video
+      if(video.progress==100){
+        video.processed=true;
+      }
+    }
+  }
+
   onUploadClick(){
     let uploadDialog=this.dialog.open(UploadVideoModalComponent)
     uploadDialog.afterClosed().subscribe(result=>{
       if(result==undefined) return;
       console.log(result)
       this.videoService.uploadVideo(result).subscribe(event=>{
-
         if(event.type===HttpEventType.UploadProgress){
           this.uploading=true;
-          this.uploadPercentage=Math.round((event.loaded/event.total)*100)
+          let uploadPercentage=Math.round((event.loaded/event.total)*100)
+          if (uploadPercentage>this.uploadPercentage) this.uploadPercentage=uploadPercentage
+          if(this.uploadPercentage==100 && this.uploading){
+            this.uploading=false
+            let video=new Video();
+            video.title=result.title
+            video.processed=false
+            this.videos.push(video)
+          }
         }else if(event.type===HttpEventType.Response){
-          this.videos.push(event.body)
+          //this.videos.push(event.body)
           this.uploading=false
         }
 

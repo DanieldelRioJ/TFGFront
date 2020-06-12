@@ -46,8 +46,9 @@ export class PerspectiveComponent implements OnInit {
 
   ngOnInit() {
       if(this.video.perspective!=undefined){
+        console.log(this.video.perspective.original_points)
         this.coordinates=this.video.perspective.original_points;
-        this.convertCoordinatesFormat(this.coordinates);
+        this.coordinates=this.convertCoordinatesFormat(this.coordinates);
         if(this.video.perspective.references!=undefined){
           this.referenceCoordinates=this.video.perspective.references
         }
@@ -205,9 +206,14 @@ export class PerspectiveComponent implements OnInit {
   }
 
   convertCoordinatesFormat(coordinates){
-    coordinates.forEach(function(coordinate, index) {
-        this[index] ={x:coordinate[0],y:coordinate[1]};
-      }, coordinates);
+    if (coordinates[0].x!=undefined)
+      return coordinates
+    let list=[]
+    for(let i=0;i<coordinates.length;i++){
+      list.push({x:coordinates[i][0],y:coordinates[i][1]})
+    }
+    return list
+
   }
 
   dragged(event,i){
@@ -229,6 +235,7 @@ export class PerspectiveComponent implements OnInit {
 
   notifySelectedPoints(){
     if(this.coordinates.length==4){
+
       this.drawn.emit({coordinates:this.coordinates,references:this.referenceCoordinates})
     }
   }

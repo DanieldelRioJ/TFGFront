@@ -137,8 +137,8 @@ export class VideoComponent implements AfterViewInit {
 
 
 
-              this.canvasContext.fillText(""+(this.distance(appearance.real_coordinates[0],appearance.real_coordinates[1],collisionElement.real_coordinates[0],collisionElement.real_coordinates[1])/this.video.perspective.one_meter-0.7).toFixed(2)
-              ,(appearance.center_col+collisionElement.center_col)/2,(appearance.center_row+collisionElement.center_row)/2)
+              //this.canvasContext.fillText(""+(this.distance(appearance.real_coordinates[0],appearance.real_coordinates[1],collisionElement.real_coordinates[0],collisionElement.real_coordinates[1])/this.video.perspective.one_meter-0.7).toFixed(2)
+              //,(appearance.center_col+collisionElement.center_col)/2,(appearance.center_row+collisionElement.center_row)/2)
             })
           }
         })
